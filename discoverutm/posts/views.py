@@ -1,45 +1,62 @@
+from django.views.generic import DetailView
 from django.views.generic import TemplateView
+from rest_framework import status as http_status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .filter import filter_posts
+from .models import Post
 from .serializers import PostSerializer
 
-# TODO: add post view instead of using modal
-# TODO: add AJAX to reload posts based on filtering
+
+def get_filter_parameters(request):
+    page = request.GET.get("page", 10)
+    tags = request.GET.getlist("t")
+
+    try:
+        page = int(page)
+    except ValueError:
+        return http_status.HTTP_400_BAD_REQUEST, {"error": "Invalid value for parameter page"}
+
+    return http_status.HTTP_200_OK, {"page": page, "tags": tags}
+
 
 class HomePageView(TemplateView):
     template_name = "posts/home.html"
 
     def get(self, request, *args, **kwargs):
-        self.page = int(request.GET.get("page", 1))
+        status, params = get_filter_parameters(request)
+        if status != http_status.HTTP_200_OK:
+            return Response(params["error"], status=status)
+
+        self.page = params["page"]
+        self.tags = params["tags"]
+
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["posts"] = filter_posts(self.page)
-        context["page"] = self.page
+        context["posts"] = filter_posts(page=self.page)
 
         return context
 
 
+class PostDetailView(DetailView):
+    model = Post
+    template_name = "posts/post_detail.html"
+    context_object_name = "post"
+
 
 @api_view(["GET"])
 def get_posts(request):
-    n = request.GET.get("n", 10)
-    tags = request.GET.getlist("t")
+    status, params = get_filter_parameters(request)
+    if status != http_status.HTTP_200_OK:
+        return Response(params["error"], status=status)
 
-    try:
-        n = int(n)
-    except ValueError:
-        return Response({"error": "Invalid value for parameter n"}, status=400)
+    page = params["page"]
+    tags = params["tags"]
 
-    # TODO: use rest api's pagination? or add custom pagination
-    # TODO: sorting filters (needs to be in sort.py?)
-    # TODO: mimic over on the homepage/build a common function
-    # TODO: add more basic filters
-
-    queryset = filter_posts(page=n, tags=tags)
+    queryset = filter_posts(page=page, tags=tags)
     serializer = PostSerializer(queryset, many=True)
 
     return Response(serializer.data)
