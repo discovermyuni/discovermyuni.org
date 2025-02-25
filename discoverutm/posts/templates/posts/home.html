@@ -1,0 +1,5 @@
+<p>hi</p>
+
+{% for post in posts %}
+    {% include "posts/compact_post.html" with title=post.title description=post.description %}
+{% endfor %}

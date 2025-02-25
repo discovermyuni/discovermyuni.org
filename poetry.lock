@@ -319,21 +319,6 @@ docs = ["furo (>=2024.8.6)", "sphinx (>=5.0)", "sphinx-notfound-page"]
 testing = ["coverage[toml] (>=5.0a4)", "pytest (>=4.6.11)", "setuptools (>=71.0.0)"]
 
 [[package]]
-name = "django-htmx"
-version = "1.22.0"
-description = "Extensions for using Django with htmx."
-optional = false
-python-versions = ">=3.9"
-files = [
-    {file = "django_htmx-1.22.0-py3-none-any.whl", hash = "sha256:9f1fcf239125a42d6dadc814b3796b8d6faad8ded444a14ae021d0241fa9a40f"},
-    {file = "django_htmx-1.22.0.tar.gz", hash = "sha256:7306e1aba4e407496f30a57ec2e0b2974a9b96c8c6036f7ec6a8b5753ea0abdd"},
-]
-
-[package.dependencies]
-asgiref = ">=3.6"
-django = ">=4.2"
-
-[[package]]
 name = "django-taggit"
 version = "6.1.0"
 description = "django-taggit is a reusable Django application for simple tagging."
@@ -507,4 +492,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "ab6555424b45976e8f7af2e43ec50853f313de3552a79ce8385dc307f7c8b070"
+content-hash = "a365ffc2fd347bee7a3c60e4073bb3c963a428b5d2a772b154caff3b75722434"

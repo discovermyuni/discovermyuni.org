@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
-    "django_htmx",
+    "django_components",
     "discoverutm.users",
     "discoverutm.posts",
 ]
@@ -160,3 +160,8 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 DJANGO_ADMIN_FORCE_ALLAUTH = False
+
+ACCOUNT_LOGIN_METHODS = {"email"}
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
