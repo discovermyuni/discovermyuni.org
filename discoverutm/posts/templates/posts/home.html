@@ -1,5 +1,13 @@
-<p>hi</p>
-
-{% for post in posts %}
-    {% include "posts/compact_post.html" with title=post.title description=post.description %}
-{% endfor %}
+{% extends "posts/base.html" %}
+{% block title %}Home - Discover UTM{% endblock %}
+{% block posts_content %}
+  <div>
+    {% if posts %}
+      {% for post in posts %}
+        {% include "posts/compact_post.html" with title=post.title description=post.description %}
+      {% endfor %}
+    {% else %}
+      <p>No posts available.</p>
+    {% endif %}
+  </div>
+{% endblock %}
