@@ -50,6 +50,7 @@ class PostDetailView(DetailView):
 @api_view(["GET"])
 def get_posts(request):
     status, params = get_filter_parameters(request)
+
     if status != http_status.HTTP_200_OK:
         return Response(params["error"], status=status)
 
@@ -57,6 +58,6 @@ def get_posts(request):
     tags = params["tags"]
 
     queryset = filter_posts(page=page, tags=tags)
-    serializer = PostSerializer(queryset, many=True)
+    serializer = PostSerializer(queryset, many=True, context={"request": request})
 
     return Response(serializer.data)
