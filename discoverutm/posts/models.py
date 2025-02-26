@@ -28,6 +28,7 @@ class Post(TimeStampedModel):
     end_date = models.DateTimeField(_("End Date"))
     location = models.ForeignKey(PostLocation, verbose_name=_("Location"), on_delete=models.PROTECT)
     tags = TaggableManager(verbose_name=_("Tags"))
+    image_url = models.URLField(_("Image URL"), blank=True)
 
 
     DESCRIPTION_PREVIEW_LENGTH = 25

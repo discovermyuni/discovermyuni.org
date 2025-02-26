@@ -12,7 +12,10 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Post
-        fields = ["id", "title", "description", "author", "start_date", "end_date", "created_at", "location", "tags"]
+        fields = [
+            "id", "title", "description", "author", "start_date", "end_date",
+            "created_at", "location", "tags", "image_url",
+        ]
         read_only_fields = ["is_staff", "is_superuser"]
 
     def get_tags(self, obj):
