@@ -2,6 +2,7 @@
 from typing import ClassVar
 
 from django.contrib.auth.models import AbstractUser
+from django.db.models import BooleanField
 from django.db.models import CharField
 from django.db.models import EmailField
 from django.urls import reverse
@@ -18,11 +19,14 @@ class User(AbstractUser):
     """
 
     # First and last name do not cover name patterns around the globe
-    name = CharField(_("name of user"), blank=True, max_length=255)
+    name = CharField(_("Name of User"), blank=True, max_length=255)
     first_name = None  # type: ignore[assignment]
     last_name = None  # type: ignore[assignment]
-    email = EmailField(_("email address"), unique=True)
+    email = EmailField(_("Email Address"), unique=True)
     username = None  # type: ignore[assignment]
+
+    is_author = BooleanField(_("Is Author?"), default=False)
+
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

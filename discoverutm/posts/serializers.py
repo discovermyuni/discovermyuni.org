@@ -17,3 +17,11 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
 
     def get_tags(self, obj):
         return list(obj.tags.values_list("name", flat=True))
+
+    def create(self, validated_data):
+        tags_data = validated_data.pop("tags", [])
+
+        post = Post.objects.create(**validated_data)
+        post.tags.add(*tags_data)
+
+        return post
