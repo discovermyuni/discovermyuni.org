@@ -30,8 +30,10 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "discoverutm.common",
     "discoverutm.users",
     "discoverutm.posts",
+    "discoverutm.dashboard",
 ]
 
 REST_FRAMEWORK = {
@@ -159,7 +161,30 @@ AUTHENTICATION_BACKENDS = [
 
 DJANGO_ADMIN_FORCE_ALLAUTH = False
 
+LOGIN_REDIRECT_URL = "/posts/"
+
+LOGOUT_REDIRECT_URL = "/posts/"
+
 ACCOUNT_LOGIN_METHODS = {"email"}
+
 ACCOUNT_EMAIL_REQUIRED = True
+
 ACCOUNT_UNIQUE_EMAIL = True
+
 ACCOUNT_USERNAME_REQUIRED = False
+
+
+# Posts settings
+
+DEFAULT_POSTS_PER_PAGE = 15
+
+POSTS_PER_PAGE_OPTIONS = [DEFAULT_POSTS_PER_PAGE, 30, 50]
+
+POSTS_SORT_TYPE_DEFAULT = "newest"
+
+POSTS_SORT_TYPE_OPTIONS = [
+    "newest",
+    "oldest",
+    "most_popular",
+    "start_date",
+]

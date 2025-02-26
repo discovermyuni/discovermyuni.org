@@ -1,11 +1,8 @@
 import json
 
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.urls import reverse
 from django.urls import reverse_lazy
 from django.views.generic import DetailView
 from django.views.generic import View
@@ -17,7 +14,6 @@ from rest_framework.response import Response
 from .exceptions import InvalidFilterParameterError
 from .filter import filter_posts
 from .filter import get_filter_parameters
-from .forms import PostForm
 from .models import Post
 from .serializers import PostSerializer
 
@@ -34,25 +30,14 @@ def home_page_view(request):
     return render(request, "posts/home.html", context)
 
 
-@login_required
-def post_form_view(request):
-    if request.method == "POST":
-        form = PostForm(request.POST)
-        form.instance.author = request.user
-
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse("posts:home"))
-
-    else:
-        form = PostForm()
-
-    return render(request, "posts/post_form.html", {"form": form})
-
 class PostDetailView(DetailView):
     model = Post
     template_name = "posts/post_detail.html"
     context_object_name = "post"
+
+
+
+""" API Views """
 
 @api_view(["GET"])
 def get_posts(request):

@@ -1,6 +1,5 @@
 from django.urls import path
-
-from . import views
+from posts import views
 
 urlpatterns = [
     path("get/", views.get_posts, name="post-get"),
