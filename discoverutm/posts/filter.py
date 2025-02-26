@@ -23,9 +23,17 @@ def get_filter_parameters(request):
     return {"page": page, "author_ids": author_ids, "tags": tags}
 
 
-def filter_posts(page, author_ids=None, tags=None):
+def filter_posts(page, sort="newest", author_ids=None, tags=None):
+    if sort == "alphabetical":
+        queryset = Post.objects.order_by("title")
+
+    elif sort == "date":
+        queryset = Post.objects.order_by("start_date")
+
+    else:
+        queryset = Post.objects.order_by("-created_at")
+
     # TODO: add page restriction
-    queryset = Post.objects.order_by("-created_at")
 
     filters = {}
     if author_ids:

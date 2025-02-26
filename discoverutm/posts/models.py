@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from taggit.managers import TaggableManager
 
@@ -30,18 +31,20 @@ class Post(TimeStampedModel):
     tags = TaggableManager(verbose_name=_("Tags"))
     image_url = models.URLField(_("Image URL"), blank=True)
 
-
     DESCRIPTION_PREVIEW_LENGTH = 25
 
     def __str__(self):
         return self.title + " | " + self.description[:self.DESCRIPTION_PREVIEW_LENGTH] + \
                "" if len(self.description) < self.DESCRIPTION_PREVIEW_LENGTH else "..."
 
+    def get_absolute_url(self):
+        return reverse("posts:post-detail", kwargs={"pk": self.pk})
+
 
 class PostTemplate(TimeStampedModel):
     title = models.CharField(_("Title"), max_length=255)
     description = models.TextField(_("Description"))
-    author = models.ForeignKey(User, verbose_name=_("Author"), on_delete=models.CASCADE)
+    author = models.ForeignKey(User, verbose_name=_("Author"), null=True, blank=True, on_delete=models.CASCADE)
     location = models.ForeignKey(PostLocation, verbose_name=_("Location"), on_delete=models.PROTECT, null=True)
     tags = TaggableManager(verbose_name=_("Tags"))
     is_public = models.BooleanField(_("Is Public?"), default=False)
