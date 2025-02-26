@@ -3,11 +3,15 @@ from rest_framework import serializers
 
 User = get_user_model()
 
+class ProfileSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id", "name", "is_author", "is_staff"]
+        read_only_fields = ["is_author, is_staff"]
 
-# TODO: add API view w/ authentication, users can fetch any other users
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ["id", "email", "name", "is_staff", "is_superuser"]
-        read_only_fields = ["is_staff", "is_superuser"]
+        fields = ["id", "name", "email", "is_author", "is_staff"]
+        read_only_fields = ["is_author, is_staff"]
