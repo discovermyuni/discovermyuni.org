@@ -1,10 +1,10 @@
 from django.urls import path
 
-from .views import create_post
-from .views import get_posts
+from . import views
 
-app_name = "posts_api"
 urlpatterns = [
-    path("get", get_posts, name="get_posts"),
-    path("create", create_post, name="create_post"),
+    path("get/", views.get_posts, name="post-get"),
+    path("create/", views.PostCreateView.as_view(), name="post-create"),
+    path("update/", views.PostUpdateView.as_view(), name="post-update"),
+    path("delete/", views.PostDeleteView.as_view(), name="post-delete"),
 ]

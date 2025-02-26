@@ -15,7 +15,7 @@ class TimeStampedModel(models.Model):
 
 
 class PostLocation(models.Model):
-    name = models.CharField(_("Name"), max_length=255)
+    name = models.CharField(_("Name"), max_length=255, primary_key=True)
 
     def __str__(self):
         return self.name
