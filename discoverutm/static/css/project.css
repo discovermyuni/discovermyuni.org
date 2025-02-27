@@ -1,4 +1,6 @@
-/* These styles are generated from project.scss. */
+html, body {
+  background-color: rgb(226, 226, 226);
+}
 
 .alert-debug {
   color: black;
