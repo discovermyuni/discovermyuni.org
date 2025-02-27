@@ -182,13 +182,12 @@ ACCOUNT_USERNAME_REQUIRED = False
 
 DEFAULT_POSTS_PER_PAGE = 15
 
-POSTS_PER_PAGE_OPTIONS = [DEFAULT_POSTS_PER_PAGE, 30, 50]
+POSTS_PER_PAGE_OPTIONS = [15, 30, 50]
 
 POSTS_SORT_TYPE_DEFAULT = "newest"
 
-POSTS_SORT_TYPE_OPTIONS = [
-    "newest",
-    "oldest",
-    "most_popular",
-    "start_date",
-]
+POSTS_SORT_TYPE_ITEMS = {
+    "newest": "created_at",
+    "oldest": "-created_at",
+    "start-date": "start_date",
+}

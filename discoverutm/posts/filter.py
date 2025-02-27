@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.paginator import Paginator
 
 from .exceptions import InvalidFilterParameterError
 from .models import Post
@@ -13,17 +14,12 @@ sort_type_parameter = "s"
 author_ids_parameter = "a"
 tags_parameter = "t"
 
-posts_per_page_default = int(settings.POSTS_PER_PAGE_DEFAULT) if hasattr(settings, "POSTS_PER_PAGE_DEFAULT") else 15
-post_per_page_options = (
-    settings.POSTS_PER_PAGE_OPTIONS
-    if hasattr(settings, "POSTS_PER_PAGE_DEFAULT")
-    else [posts_per_page_default]
-)
+posts_per_page_default = int(settings.POSTS_PER_PAGE_DEFAULT)
+post_per_page_options = settings.POSTS_PER_PAGE_OPTIONS
 
-sort_type_default = settings.POSTS_SORT_TYPE_DEFAULT if hasattr(settings, "POSTS_SORT_TYPE_DEFAULT") else "newest"
-sort_type_options = (
-    settings.POSTS_SORT_TYPE_OPTIONS if hasattr(settings, "POSTS_SORT_TYPE_OPTIONS") else [sort_type_default]
-)
+sort_type_default = settings.POSTS_SORT_TYPE_DEFAULT
+sort_type_options = list(settings.POSTS_SORT_TYPE_ITEMS.keys())
+
 
 def get_filter_parameters(request):
     try:
@@ -57,18 +53,17 @@ def get_filter_parameters(request):
     author_ids = request.GET.getlist(author_ids_parameter, [])
     tags = request.GET.getlist(tags_parameter, [])
 
-    return {"sort_type": sort_type, "page": page, "author_ids": author_ids, "tags": tags}
+    return {
+        "sort_type": sort_type,
+        "page": page,
+        "posts_per_page": posts_per_page,
+        "author_ids": author_ids,
+        "tags": tags,
+    }
 
 
 def _get_sorted_queryset(sort_type):
-    if sort_type == "most_popular":
-        return Post.objects.order_by("title")
-    if sort_type == "start_date":
-        return Post.objects.order_by("start_date")
-    if sort_type == "oldest":
-        return Post.objects.order_by("created_at")
-
-    return Post.objects.order_by("-created_at")
+    return Post.objects.order_by(settings.POSTS_SORT_TYPE_ITEMS[sort_type])
 
 
 def _separate_tags(tags):
@@ -100,11 +95,12 @@ def _create_filters(author_ids, tags):
 
 
 
-def filter_posts(sort_type, page, author_ids=None, tags=None):
+def filter_posts(sort_type, page, posts_per_page, author_ids=None, tags=None):
     queryset = _get_sorted_queryset(sort_type)
     filters = _create_filters(author_ids, tags)
 
     if len(filters) > 0:
         queryset = queryset.filter(**filters).distinct()
 
-    return queryset
+    paginator = Paginator(queryset, posts_per_page)
+    return paginator.get_page(page).object_list
