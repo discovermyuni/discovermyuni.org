@@ -1,7 +1,7 @@
 volumes:
   discoverutm_local_postgres_data: {}
   discoverutm_local_postgres_data_backups: {}
-  
+
 
 services:
   django:

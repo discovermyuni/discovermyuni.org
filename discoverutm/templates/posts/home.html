@@ -1,12 +1,14 @@
 {% extends "base.html" %}
-{% load static %}
-{% block title %}Home - Discover UTM{% endblock %}
 
+{% load static %}
+
+{% block title %}
+  Home - Discover UTM
+{% endblock title %}
 {% block javascript %}
   {{ block.super }}
   <script src="{% static 'js/home.js' %}"></script>
-{% endblock %}
-
+{% endblock javascript %}
 {% block content %}
   <div id="posts-container">
     {% if posts %}
@@ -15,6 +17,5 @@
       <p>No posts available.</p>
     {% endif %}
   </div>
-
   <button onclick="refreshPosts()">Refresh Posts</button>
-{% endblock %}
+{% endblock content %}

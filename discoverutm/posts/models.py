@@ -8,7 +8,6 @@ from taggit.managers import TaggableManager
 User = get_user_model()
 
 
-
 class PostLocation(models.Model):
     name = models.CharField(_("Name"), max_length=255, primary_key=True)
 
@@ -29,8 +28,11 @@ class Post(TimeStampedModel):
     DESCRIPTION_PREVIEW_LENGTH = 25
 
     def __str__(self):
-        return self.title + " | " + self.description[:self.DESCRIPTION_PREVIEW_LENGTH] + \
-               "" if len(self.description) < self.DESCRIPTION_PREVIEW_LENGTH else "..."
+        return (
+            self.title + " | " + self.description[: self.DESCRIPTION_PREVIEW_LENGTH] + ""
+            if len(self.description) < self.DESCRIPTION_PREVIEW_LENGTH
+            else "..."
+        )
 
     def get_absolute_url(self):
         return reverse("posts:post-detail", kwargs={"pk": self.pk})

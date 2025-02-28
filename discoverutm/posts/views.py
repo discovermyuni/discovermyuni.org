@@ -34,8 +34,8 @@ class PostDetailView(DetailView):
     context_object_name = "post"
 
 
+# API views
 
-""" API Views """
 
 @api_view(["GET"])
 def get_posts(request):
@@ -102,5 +102,3 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
         if post.author != request.user:
             return JsonResponse({"error": "You are not the author of this post."}, status=403)
         return super().dispatch(request, *args, **kwargs)
-
-

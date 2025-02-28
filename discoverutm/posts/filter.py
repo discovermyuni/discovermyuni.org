@@ -1,4 +1,3 @@
-
 from django.conf import settings
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -9,6 +8,7 @@ from .models import Post
 
 def raise_value_error():
     raise ValueError
+
 
 page_parameter = "p"
 posts_per_page_parameter = "c"
@@ -37,9 +37,7 @@ def get_filter_parameters(request):
         if posts_per_page not in post_per_page_options:
             raise_value_error()
     except ValueError as e:
-        error_msg = (
-            f"Invalid posts per page ({posts_per_page_parameter}). Must be one of {post_per_page_options}."
-        )
+        error_msg = f"Invalid posts per page ({posts_per_page_parameter}). Must be one of {post_per_page_options}."
         raise InvalidFilterParameterError(error_msg, 400) from e
 
     try:
@@ -47,9 +45,7 @@ def get_filter_parameters(request):
         if sort_type not in sort_type_options:
             raise_value_error()
     except ValueError as e:
-        error_msg = (
-            f"Invalid sort type ({sort_type_parameter}). Must be one of {sort_type_options}."
-        )
+        error_msg = f"Invalid sort type ({sort_type_parameter}). Must be one of {sort_type_options}."
         raise InvalidFilterParameterError(error_msg, 400) from e
 
     author_ids = request.GET.getlist(author_ids_parameter, [])
@@ -96,7 +92,6 @@ def _create_filters(author_ids, tags):
             exclude_conditions.append(~Q(tags__name__in=exclude_tags))
 
     return filters, exclude_conditions
-
 
 
 def filter_posts(sort_type, page, posts_per_page, author_ids=None, tags=None):

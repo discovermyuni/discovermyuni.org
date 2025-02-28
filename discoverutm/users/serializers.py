@@ -3,6 +3,7 @@ from rest_framework import serializers
 
 User = get_user_model()
 
+
 class ProfileSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User

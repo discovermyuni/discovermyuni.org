@@ -1,4 +1,3 @@
-
 from typing import ClassVar
 
 from django.contrib.auth.models import AbstractUser
@@ -26,7 +25,6 @@ class User(AbstractUser):
     username = None  # type: ignore[assignment]
 
     is_author = BooleanField(_("Is Author?"), default=False)
-
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

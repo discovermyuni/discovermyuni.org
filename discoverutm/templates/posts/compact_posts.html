@@ -1,8 +1,6 @@
 <h3>POSTS</h3>
 {% for post in posts %}
-    <h5>{{ post.title }}</h5>
-    <p>{{ post.description }}</p>
-    {% if post.image %}
-    <img src="{{ post.image.url }}" />
-    {% endif %}
+  <h5>{{ post.title }}</h5>
+  <p>{{ post.description }}</p>
+  {% if post.image %}<img alt="Post Banner" src="{{ post.image.url }}" />{% endif %}
 {% endfor %}
