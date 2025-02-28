@@ -12,22 +12,22 @@ default:
 # build: Build python image.
 build:
     @echo "Building python image..."
-    @docker compose build
+    @docker compose -f docker-compose.local.yml build
 
 # up: Start up containers.
 up:
     @echo "Starting up containers..."
-    @docker compose up -d --remove-orphans
+    @docker compose -f docker-compose.local.yml up -d --remove-orphans
 
 # down: Stop containers.
 down:
     @echo "Stopping containers..."
-    @docker compose down
+    @docker compose -f docker-compose.local.yml down
 
 # prune: Remove containers and their volumes.
 prune *args:
     @echo "Killing containers and removing volumes..."
-    @docker compose down -v {{args}}
+    @docker compose -f docker-compose.local.yml down -v {{args}}
 
 # logs: View container logs
 logs *args:
@@ -35,4 +35,4 @@ logs *args:
 
 # manage: Executes `manage.py` command.
 manage +args:
-    @docker compose run --rm django python ./manage.py {{args}}
+    @docker compose -f docker-compose.local.yml run --rm django python ./manage.py {{args}}
