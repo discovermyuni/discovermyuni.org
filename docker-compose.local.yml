@@ -2,7 +2,6 @@ volumes:
   discoverutm_local_postgres_data: {}
   discoverutm_local_postgres_data_backups: {}
 
-
 services:
   django:
     build:
@@ -19,7 +18,8 @@ services:
       - ./.envs/.local/.postgres
     ports:
       - '8000:8000'
-    command: /start
+    command: /start.sh
+    restart: always
 
   postgres:
     build:

@@ -562,6 +562,24 @@ pyyaml = ">=5.1"
 virtualenv = ">=20.10.0"
 
 [[package]]
+name = "psycopg2"
+version = "2.9.10"
+description = "psycopg2 - Python-PostgreSQL Database Adapter"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "psycopg2-2.9.10-cp310-cp310-win32.whl", hash = "sha256:5df2b672140f95adb453af93a7d669d7a7bf0a56bcd26f1502329166f4a61716"},
+    {file = "psycopg2-2.9.10-cp310-cp310-win_amd64.whl", hash = "sha256:c6f7b8561225f9e711a9c47087388a97fdc948211c10a4bccbf0ba68ab7b3b5a"},
+    {file = "psycopg2-2.9.10-cp311-cp311-win32.whl", hash = "sha256:47c4f9875125344f4c2b870e41b6aad585901318068acd01de93f3677a6522c2"},
+    {file = "psycopg2-2.9.10-cp311-cp311-win_amd64.whl", hash = "sha256:0435034157049f6846e95103bd8f5a668788dd913a7c30162ca9503fdf542cb4"},
+    {file = "psycopg2-2.9.10-cp312-cp312-win32.whl", hash = "sha256:65a63d7ab0e067e2cdb3cf266de39663203d38d6a8ed97f5ca0cb315c73fe067"},
+    {file = "psycopg2-2.9.10-cp312-cp312-win_amd64.whl", hash = "sha256:4a579d6243da40a7b3182e0430493dbd55950c493d8c68f4eec0b302f6bbf20e"},
+    {file = "psycopg2-2.9.10-cp39-cp39-win32.whl", hash = "sha256:9d5b3b94b79a844a986d029eee38998232451119ad653aea42bb9220a8c5066b"},
+    {file = "psycopg2-2.9.10-cp39-cp39-win_amd64.whl", hash = "sha256:88138c8dedcbfa96408023ea2b0c369eda40fe5d75002c0964c78f46f11fa442"},
+    {file = "psycopg2-2.9.10.tar.gz", hash = "sha256:12ec0b40b0273f95296233e8750441339298e6a572f7039da5b260e3c8b60e11"},
+]
+
+[[package]]
 name = "pycparser"
 version = "2.22"
 description = "C parser in Python"
@@ -694,6 +712,30 @@ requests = ">=2.0.0"
 rsa = ["oauthlib[signedtoken] (>=3.0.0)"]
 
 [[package]]
+name = "rust-just"
+version = "1.39.0"
+description = "🤖 Just a command runner"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "rust_just-1.39.0-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:3845ab10254c994ddebcf489b30c53a24c1d11585c9e0eeaf1cb0da422bee87f"},
+    {file = "rust_just-1.39.0-py3-none-macosx_11_0_arm64.whl", hash = "sha256:fd5c12118a8d65266ccdacfbc24bab26f77d509caaf263095cb96611ea6ce7e8"},
+    {file = "rust_just-1.39.0-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:428d07b1e798777c4e9a8c245539d72743be095558010f0a86823e1c442930f9"},
+    {file = "rust_just-1.39.0-py3-none-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:135a7a65a8641b00a2fe7f3156a97ab7052e4830a922a71e67ca4e38ccd54cd2"},
+    {file = "rust_just-1.39.0-py3-none-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:94eb45e585fda019f7f9cbac198e10e31f81c704371887cbdec9b7a1ae2e0d29"},
+    {file = "rust_just-1.39.0-py3-none-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:de4a8566ca1eb87b5ff2669a6dd9474b16977c5d712534a5a9c7a950271da2d0"},
+    {file = "rust_just-1.39.0-py3-none-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:4e7ecd8fd862729c243498951caa54d778ff480c2524039280ff3ebb9a64299f"},
+    {file = "rust_just-1.39.0-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:576229024d2ef8fc696d5a049ecd0d8f3d9b920a32e76f65e95840d24d804101"},
+    {file = "rust_just-1.39.0-py3-none-musllinux_1_2_aarch64.whl", hash = "sha256:c1cd9240e2c1b352d7ccc6b89ce84fcc0352f15bb9660cdc6bc34802b36251b6"},
+    {file = "rust_just-1.39.0-py3-none-musllinux_1_2_armv7l.whl", hash = "sha256:d6eff0461df7e36eba6e7f0addf16ef98563cf8cb483e4c8393be5456d6af5c6"},
+    {file = "rust_just-1.39.0-py3-none-musllinux_1_2_i686.whl", hash = "sha256:0dfcc49a5fa126ba923b58e48921fd117e429660495577a854494c6ced3134c9"},
+    {file = "rust_just-1.39.0-py3-none-musllinux_1_2_x86_64.whl", hash = "sha256:826203ad02c869ad8621993a608adb01394ef9c9c9ca6aa7dd7875b1f272aa46"},
+    {file = "rust_just-1.39.0-py3-none-win32.whl", hash = "sha256:dcef0926b287449e853b878f6f34759a797d017cefb83afbcd74820d37259b78"},
+    {file = "rust_just-1.39.0-py3-none-win_amd64.whl", hash = "sha256:3139f3f76434a8ebbf35b213d149e647c4d9546312b438e262df7ec41e7ef7bc"},
+    {file = "rust_just-1.39.0.tar.gz", hash = "sha256:247d0b293924cc8089a73428c9c03a3c2c0627bb8f205addb976ded0681f0dac"},
+]
+
+[[package]]
 name = "sqlparse"
 version = "0.5.3"
 description = "A non-validating SQL parser."
@@ -759,4 +801,4 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "0bd617d3256271991ccbbee54eda468bd9e96f8a130c11519fbd9d362f106ca8"
+content-hash = "37749f21c628882a617fde2fcff237abc6ad8965bee3ca7371f6d04624c31c0c"

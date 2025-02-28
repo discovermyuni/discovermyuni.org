@@ -16,9 +16,11 @@ django-allauth = {extras = ["socialaccount"], version = "^65.4.1"}
 django-taggit = "^6.1.0"
 requests = "^2.32.3"
 pillow = "^11.1.0"
+psycopg2 = "^2.9.10"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^4.1.0"
+rust-just = "^1.39.0"
 
 [build-system]
 requires = ["poetry-core"]
