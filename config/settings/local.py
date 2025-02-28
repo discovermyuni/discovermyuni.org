@@ -145,9 +145,6 @@ STORAGES = {
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
     },
-    "archive": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-    },
     "staticfiles": {
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
@@ -180,7 +177,7 @@ ACCOUNT_USERNAME_REQUIRED = False
 
 # Posts settings
 
-DEFAULT_POSTS_PER_PAGE = 15
+POSTS_PER_PAGE_DEFAULT = 15
 
 POSTS_PER_PAGE_OPTIONS = [15, 30, 50]
 

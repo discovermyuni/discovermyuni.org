@@ -1,13 +1,20 @@
-{% extends "posts/base.html" %}
+{% extends "base.html" %}
+{% load static %}
 {% block title %}Home - Discover UTM{% endblock %}
-{% block posts_content %}
-  <div>
+
+{% block javascript %}
+  {{ block.super }}
+  <script src="{% static 'js/home.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+  <div id="posts-container">
     {% if posts %}
-      {% for post in posts %}
-        {% include "posts/compact_post.html" with title=post.title description=post.description %}
-      {% endfor %}
+      {% include "posts/compact_posts.html" with posts=posts %}
     {% else %}
       <p>No posts available.</p>
     {% endif %}
   </div>
+
+  <button onclick="refreshPosts()">Refresh Posts</button>
 {% endblock %}

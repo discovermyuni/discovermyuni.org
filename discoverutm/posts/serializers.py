@@ -16,7 +16,7 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
         model = Post
         fields = [
             "id", "title", "description", "author", "start_date", "end_date",
-            "created_at", "location", "tags", "image_url",
+            "created_at", "location", "tags", "image",
         ]
         read_only_fields = ["is_staff", "is_superuser"]
 

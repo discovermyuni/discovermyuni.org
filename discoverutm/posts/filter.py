@@ -1,5 +1,7 @@
+
 from django.conf import settings
 from django.core.paginator import Paginator
+from django.db.models import Q
 
 from .exceptions import InvalidFilterParameterError
 from .models import Post
@@ -42,7 +44,7 @@ def get_filter_parameters(request):
 
     try:
         sort_type = request.GET.get(sort_type_parameter, sort_type_default)
-        if sort_type not in settings.POSTS_SORT_TYPE_OPTIONS:
+        if sort_type not in sort_type_options:
             raise_value_error()
     except ValueError as e:
         error_msg = (
@@ -81,6 +83,8 @@ def _separate_tags(tags):
 
 def _create_filters(author_ids, tags):
     filters = {}
+    exclude_conditions = []
+
     if author_ids:
         filters["author__id__in"] = author_ids
 
@@ -89,18 +93,18 @@ def _create_filters(author_ids, tags):
         if len(include_tags) > 0:
             filters["tags__name__in"] = include_tags
         if len(exclude_tags) > 0:
-            filters["tags__name__nin"] = exclude_tags
+            exclude_conditions.append(~Q(tags__name__in=exclude_tags))
 
-    return filters
+    return filters, exclude_conditions
 
 
 
 def filter_posts(sort_type, page, posts_per_page, author_ids=None, tags=None):
     queryset = _get_sorted_queryset(sort_type)
-    filters = _create_filters(author_ids, tags)
+    filters, exclude_conditions = _create_filters(author_ids, tags)
 
-    if len(filters) > 0:
-        queryset = queryset.filter(**filters).distinct()
+    if len(filters) > 0 or len(exclude_conditions) > 0:
+        queryset = queryset.filter(*exclude_conditions, **filters).distinct()
 
     paginator = Paginator(queryset, posts_per_page)
     return paginator.get_page(page).object_list

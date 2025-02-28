@@ -9,7 +9,6 @@ from django.views.generic import View
 from django.views.generic.edit import DeleteView
 from django.views.generic.edit import UpdateView
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
 
 from .exceptions import InvalidFilterParameterError
 from .filter import filter_posts
@@ -21,11 +20,10 @@ from .serializers import PostSerializer
 def home_page_view(request):
     try:
         params = get_filter_parameters(request)
-    except InvalidFilterParameterError as e:
-        return Response(e.message, status=e.status)
-
-    posts = filter_posts(**params)
-    context = {"posts": posts}
+        posts = filter_posts(**params)
+        context = {"posts": posts, "params": params}
+    except InvalidFilterParameterError:
+        context = {"posts": [], "params": {}}
 
     return render(request, "posts/home.html", context)
 
@@ -43,13 +41,25 @@ class PostDetailView(DetailView):
 def get_posts(request):
     try:
         params = get_filter_parameters(request)
+        posts = filter_posts(**params)
     except InvalidFilterParameterError as e:
-        return Response(e.message, status=e.status)
+        return JsonResponse({"error": e.error_message}, status=400)
 
-    posts = filter_posts(**params)
     serializer = PostSerializer(posts, many=True, context={"request": request})
 
-    return Response(serializer.data)
+    return JsonResponse(serializer.data)
+
+
+@api_view(["GET"])
+def render_posts(request):
+    try:
+        params = get_filter_parameters(request)
+        posts = filter_posts(**params)
+        context = {"posts": posts, "params": params}
+    except InvalidFilterParameterError:
+        context = {"posts": [], "params": {}}
+
+    return render(request, "posts/compact_posts.html", context)
 
 
 class PostCreateView(LoginRequiredMixin, View):
