@@ -49,12 +49,12 @@
             </button>
             <a class="navbar-brand" href="{% url 'posts:home' %}">Discover UTM</a>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              {% load is_active %}
+
               <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                  <a class="nav-link" href="{% url 'posts:home' %}">Home <span class="visually-hidden">(current)</span></a>
-                </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'posts:home' %}">Posts</a>
+                  <a class="nav-link {% is_active request 'posts:home' %}"
+                     href="{% url 'posts:home' %}">Posts</a>
                 </li>
                 {% if request.user.is_authenticated %}
                   <li class="nav-item">

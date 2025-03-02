@@ -29,9 +29,10 @@ class Post(TimeStampedModel):
 
     def __str__(self):
         return (
-            self.title + " | " + self.description[: self.DESCRIPTION_PREVIEW_LENGTH] + ""
-            if len(self.description) < self.DESCRIPTION_PREVIEW_LENGTH
-            else "..."
+            self.title
+            + " | "
+            + self.description[: self.DESCRIPTION_PREVIEW_LENGTH]
+            + ("" if len(self.description) < self.DESCRIPTION_PREVIEW_LENGTH else "...")
         )
 
     def get_absolute_url(self):

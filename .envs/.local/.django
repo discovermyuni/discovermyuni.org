@@ -1,10 +1,4 @@
 SECRET_KEY=secret
 
-DB_ENGINE="django.db.backends.postgresql"
-DB_NAME=mydb
-DB_USER=myuser
-DB_PASSWORD=mypassword
-DB_HOST=postgres
-DB_PORT=5432
 
 DJANGO_SUPERUSER_PASSWORD=password
