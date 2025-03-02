@@ -8,14 +8,21 @@ Each file has specific context attached to it, i.e. variables you can refer to w
 You may refer to this file to quickly refer to what the context is.
 
 ## URL Reversing
-Often, you might see `{% url "posts:home" %} or `{% url "posts:detail" post.pk %}
+Often, you might see `{% url "posts:home" %} or `{% url "posts:detail" post.pk %} in href tags and the likes.
+
+This ensures URLs aren't hardcoded in the templates, as these url names are defined in the code (see URLs section).
+
 
 ## Global Context
 All templates can access these variables:
 - request (can be used to access the current user session, including auth) via
   - request.is_authenticated
+etc.
 
-- settings (the current loaded settings.py file, refer to this carefully as you can expose secrets)
+See [this url](https://docs.djangoproject.com/en/5.1/ref/request-response/>) for all the avaliable attributes.
+
+- settings (the current loaded settings.py file, refer to this carefully as you can expose secrets).
+See `config/settings/local.py` for reference. Assume most settings in local a subset of the production settings file, by the 12-factor approach.
 
 
 ## Models
@@ -99,10 +106,12 @@ To the user, the URL should be like: `domain.com/post/<int>`. To you, it should 
 
 
 `dashboard/home.html`
-docs WIP
+Pretty much identical to `posts.html`, you may assume the user is logged in to access this template.
+
+`posts` refers to the posts of the user, and should use a `compact_posts.html`-esque approach (if querying the api, always filter with author_ids set to [request.user.id], you can access this in the JS via DOM by storing it in a hidden tag or use an in-line approach).
 
 `dashboard/post_form.html`
-docs WIP
+No additional context should need to be passed here, this should be created using the aid of `crispy_forms` (don't worry about it for now)
 
 
 Accounts and logging in is done via abstraction and inheritance mostly.
@@ -141,3 +150,14 @@ urlpatterns = [
 In this case, to refer to the first url, {% url "dashboard:home" %} (prefix by app_name).
 
 If quotes, just use " in the html tag and ' in the template tag. Like "{% url 'dashboard:home' %}"
+
+## Admin Portal
+There is an admin site to see all the database models and add things.
+
+If you want to create Posts and things, the only method right now is to:
+
+Go to 127.0.0.1:8000/admin (or whatever the Docker host is) then sign in with the admin credentials (a@a.com and password 'a') on local.
+
+Create a PostLocation first (click the plus) then a Post, set the author to a@a.com and location to your new location.
+
+Tags can be added like `dog,discord,board games`.
