@@ -156,7 +156,7 @@ There is an admin site to see all the database models and add things.
 
 If you want to create Posts and things, the only method right now is to:
 
-Go to 127.0.0.1:8000/admin (or whatever the Docker host is) then sign in with the admin credentials (a@a.com and password 'a') on local.
+Go to 127.0.0.1:8000/admin (or whatever the Docker host is) then sign in with the admin credentials ("admin@example.com", "password") on local.
 
 Create a PostLocation first (click the plus) then a Post, set the author to a@a.com and location to your new location.
 

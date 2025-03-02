@@ -1,16 +1,18 @@
-from django.contrib.auth.decorators import login_required
+from common.decorators import login_required_message
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from posts.forms import PostForm
 
+LOGIN_REQUIRED_MESSAGE = "You need to be logged in to view the dashboard."
 
-@login_required
+
+@login_required_message(LOGIN_REQUIRED_MESSAGE)
 def dashboard_page_view(request):
     return render(request, "dashboard/home.html", {})
 
 
-@login_required
+@login_required_message(LOGIN_REQUIRED_MESSAGE)
 def post_form_view(request):
     if request.method == "POST":
         form = PostForm(request.POST)

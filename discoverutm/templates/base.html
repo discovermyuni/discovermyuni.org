@@ -56,6 +56,10 @@
                   <a class="nav-link {% is_active request 'posts:home' %}"
                      href="{% url 'posts:home' %}">Posts</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link {% is_active request 'dashboard:home' %}"
+                     href="{% url 'dashboard:home' %}">Dashboard</a>
+                </li>
                 {% if request.user.is_authenticated %}
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'users:detail' request.user.pk %}">Profile</a>

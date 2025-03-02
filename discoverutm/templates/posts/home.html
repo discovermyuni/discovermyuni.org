@@ -10,13 +10,7 @@
   <script src="{% static 'js/home.js' %}"></script>
 {% endblock javascript %}
 {% block content %}
-  <div id="posts-container">
-    <h3>POSTS</h3>
-    {% if posts %}
-      {% include "posts/compact_posts.html" with posts=posts %}
-    {% else %}
-      <p>No posts available.</p>
-    {% endif %}
-  </div>
+  <h3>POSTS</h3>
+  <div id="posts-container">{% include "posts/compact_posts.html" with posts=posts %}</div>
   <button onclick="refreshPosts()">Refresh Posts</button>
 {% endblock content %}
