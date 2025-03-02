@@ -11,6 +11,7 @@
 {% endblock javascript %}
 {% block content %}
   <div id="posts-container">
+    <h3>POSTS</h3>
     {% if posts %}
       {% include "posts/compact_posts.html" with posts=posts %}
     {% else %}

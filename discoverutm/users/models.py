@@ -23,7 +23,6 @@ class User(AbstractUser):
     last_name = None  # type: ignore[assignment]
     email = EmailField(_("Email Address"), unique=True)
     is_author = BooleanField(_("Is Author?"), default=False)
-    username = None  # type: ignore[assignment]
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
