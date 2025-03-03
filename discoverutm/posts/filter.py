@@ -10,6 +10,7 @@ def raise_value_error():
     raise ValueError
 
 
+query_parameter = "q"
 page_parameter = "p"
 posts_per_page_parameter = "c"
 sort_type_parameter = "s"
@@ -24,6 +25,8 @@ sort_type_options = list(settings.POSTS_SORT_TYPE_ITEMS.keys())
 
 
 def get_filter_parameters(request):
+    query = str(request.GET.get(query_parameter, "")).strip()
+
     try:
         page = int(request.GET.get(page_parameter, 1))
         if page < 1:
@@ -52,6 +55,7 @@ def get_filter_parameters(request):
     tags = request.GET.getlist(tags_parameter, [])
 
     return {
+        "query": query,
         "sort_type": sort_type,
         "page": page,
         "posts_per_page": posts_per_page,
@@ -77,9 +81,17 @@ def _separate_tags(tags):
     return include_tags, exclude_tags
 
 
-def _create_filters(author_ids, tags):
+def _create_filters(query="", author_ids=None, tags=None, **kwargs):
+    if tags is None:
+        tags = []
+    if author_ids is None:
+        author_ids = []
+
     filters = {}
     exclude_conditions = []
+
+    if query:
+        filters["title__icontains"] = query
 
     if author_ids:
         filters["author__id__in"] = author_ids
@@ -94,9 +106,9 @@ def _create_filters(author_ids, tags):
     return filters, exclude_conditions
 
 
-def filter_posts(sort_type, page, posts_per_page, author_ids=None, tags=None):
+def filter_posts(sort_type, page, posts_per_page, **kwargs):
     queryset = _get_sorted_queryset(sort_type)
-    filters, exclude_conditions = _create_filters(author_ids, tags)
+    filters, exclude_conditions = _create_filters(**kwargs)
 
     if len(filters) > 0 or len(exclude_conditions) > 0:
         queryset = queryset.filter(*exclude_conditions, **filters).distinct()

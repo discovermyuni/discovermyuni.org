@@ -1,6 +1,31 @@
 {% extends "base.html" %}
 
+{% load static %}
+
+{% block css %}
+  {{ block.super }}
+  <link href="{% static 'css/dashboard.css' %}" rel="stylesheet" />
+{% endblock css %}
+{% block title %}
+  Dashboard
+{% endblock title %}
 {% block content %}
-  <h1>helo dahsboard</h1>
-  <p>signed in as {{ request.user }}</p>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1>Dashboard</h1>
+        <p>signed in as {{ request.user }}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h2>Post Templates</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h2>Posts</h2>
+      </div>
+    </div>
+  </div>
 {% endblock content %}

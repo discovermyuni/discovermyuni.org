@@ -84,6 +84,7 @@ The navbar active links are auto set by a custom templatetag (the class called i
 The primary page users will view, starts with an initial set of posts based on the URL filters (see `static/js/home.js` for more info -- same filters).
 
 Initial set of posts can be referred with `posts` and the filter params by `params`. Filter params come in a dictionary (key: value). Latest filters are:
+- query (q): str (search essentially)
 - page (p): int
 - posts_per_page (c): int
 - sort_type (s): "newest" | "oldest" | "start_date"
