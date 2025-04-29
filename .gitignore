@@ -268,7 +268,8 @@ tags
 dump.rdb
 
 ### Project template
-discoverutm/media/
+disvoverutm/media/
+!discoverutm/media/debug/
 
 .pytest_cache/
 .ipython/
@@ -277,5 +278,3 @@ discoverutm/media/
 !.envs/.local/
 
 db.sqlite3
-
-media/

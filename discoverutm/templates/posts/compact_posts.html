@@ -2,11 +2,13 @@
   {% for post in posts %}
     <h5>{{ post.title }}</h5>
     <p>{{ post.description }}</p>
-    <p>{{ post.start_date }}</p>
-    <p>{{ post.end_date }}</p>
-    <p>{{ post.created_at|date:"j F, Y, g:i a" }}</p>
-    <p>{{ post.author }}</p>
-    <a href="{% url 'post-detail' post.pk %}">go</a>
+    <p>Start: {{ post.start_date|date:"j F, Y, g:i a" }}</p>
+    <p>End: {{ post.end_date|date:"j F, Y, g:i a" }}</p>
+    <p>Created: {{ post.created_at|date:"j F, Y, g:i a" }}</p>
+    <p>Author: {{ post.author }}</p>
+    <p>Location: {{ post.location }}</p>
+    <a href="{% url 'post-detail' post.pk %}">Learn More</a>
+    <p>tags:</p>
     <ul>
       {% for tag in post.tags.all %}<li>{{ tag }}</li>{% endfor %}
     </ul>
