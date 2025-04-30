@@ -10,7 +10,12 @@
   <script src="{% static 'js/home.js' %}"></script>
 {% endblock javascript %}
 {% block content %}
-  <h3>POSTS</h3>
-  <div id="posts-container">{% include "posts/compact_posts.html" with posts=posts %}</div>
-  <button onclick="refreshPosts()">Refresh Posts</button>
+  <div class="container py-4">
+    <h3 class="text-dark mb-4">POSTS</h3>
+    <div id="posts-container" class="d-flex flex-column gap-3">
+      {% include "posts/compact_posts.html" with posts=posts %}
+    </div>
+    <button class="btn btn-success mt-4" onclick="refreshPosts()">Refresh Posts</button>
+  </div>
 {% endblock content %}
+
