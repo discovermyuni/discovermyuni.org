@@ -12,7 +12,7 @@ from taggit.managers import TaggableManager
 
 logger = logging.getLogger(__name__)
 User = get_user_model()
-
+#test push
 
 def path_and_rename(instance, fp):
     upload_to = "debug/posts/" if settings.DEBUG else "posts/"
