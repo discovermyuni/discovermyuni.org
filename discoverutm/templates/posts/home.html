@@ -2,20 +2,64 @@
 
 {% load static %}
 
+{% block css %}
+  <!-- Bootstrap first… -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
+    … />
+
+  <!-- Your custom styles -->
+  <link href="{% static 'css/home.css' %}" rel="stylesheet" />
+{% endblock css %}
+
 {% block title %}
   Home - Discover UTM
 {% endblock title %}
+
+
+
 {% block javascript %}
   {{ block.super }}
   <script src="{% static 'js/home.js' %}"></script>
 {% endblock javascript %}
+
 {% block content %}
-  <div class="container py-4">
-    <h3 class="text-dark mb-4">POSTS</h3>
-    <div id="posts-container" class="d-flex flex-column gap-3">
-      {% include "posts/compact_posts.html" with posts=posts %}
+  <div class="container-fluid">
+    <div class="row">
+
+      <!-- SIDEBAR -->
+      <aside class="col-12 col-md-3 sidebar p-4">
+        <!-- Put your “other stuff” here -->
+        <h5 class="text-light">Sidebar</h5>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-muted">Link 1</a></li>
+          <li><a href="#" class="text-muted">Link 2</a></li>
+          <li><a href="#" class="text-muted">Link 3</a></li>
+        </ul>
+      </aside>
+
+      <!-- MAIN CONTENT -->
+      <main class="col-12 col-md-9 main-content p-4">
+        <div class="search-container mb-4">
+          <input type="text" class="search-bar" placeholder="Search posts...">
+          <div class="filters mt-2">
+            <button class="filter-button">Most Recent</button>
+            <button class="filter-button">Most Popular</button>
+            <button class="filter-button">Following</button>
+          </div>
+        </div>
+
+        <!-- POSTS: vertical list -->
+        <div id="posts-list">
+          {% include "posts/compact_posts.html" with posts=posts %}
+        </div>
+
+        <div class="text-center mt-4">
+          <button class="action-button" onclick="refreshPosts()">Load More</button>
+        </div>
+      </main>
+
     </div>
-    <button class="btn btn-success mt-4" onclick="refreshPosts()">Refresh Posts</button>
   </div>
 {% endblock content %}
-
