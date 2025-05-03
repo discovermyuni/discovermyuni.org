@@ -6,4 +6,5 @@ app_name = "dashboard"
 urlpatterns = [
     path("", views.dashboard_page_view, name="home"),
     path("new/", views.post_form_view, name="new-post"),
+    path("new-template/", views.post_template_form_view, name="new-template"),
 ]

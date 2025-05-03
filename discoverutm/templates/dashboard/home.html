@@ -19,12 +19,18 @@
     </div>
     <div class="row">
       <div class="col">
-        <h2>Post Templates</h2>
+        <h2>My Post Templates</h2>
+        <a href="{% url 'dashboard:new-template' %}">Create New Post Template</a>
+        <div id="post-templates-list">
+          {% include "dashboard/render_template_cards.html" with templates=user_post_templates %}
+        </div>
       </div>
     </div>
     <div class="row">
       <div class="col">
-        <h2>Posts</h2>
+        <h2>My Posts</h2>
+        <a href="{% url 'dashboard:new-post' %}">Create New Post</a>
+        <div id="posts-list">{% include "posts/render_cards.html" with posts=user_posts %}</div>
       </div>
     </div>
   </div>

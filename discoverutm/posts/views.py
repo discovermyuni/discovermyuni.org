@@ -30,7 +30,7 @@ def home_page_view(request):
 
 class PostDetailView(DetailView):
     model = Post
-    template_name = "posts/post_detail.html"
+    template_name = "posts/detail.html"
     context_object_name = "post"
 
 
@@ -51,7 +51,7 @@ def get_posts(request):
 
 
 @api_view(["GET"])
-def render_posts(request):
+def render_cards(request):
     try:
         params = get_filter_parameters(request)
         posts = filter_posts(**params)
@@ -59,7 +59,7 @@ def render_posts(request):
     except InvalidFilterParameterError:
         context = {"posts": [], "params": {}}
 
-    return render(request, "posts/compact_posts.html", context)
+    return render(request, "posts/render_cards.html", context)
 
 
 class PostCreateView(LoginRequiredMixin, View):
