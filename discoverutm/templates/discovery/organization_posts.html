@@ -1,54 +1,41 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
 
-{% load static %}
-
-{% block css %}
-  {{ block.super }}
-  <link href="{% static 'css/home.css' %}" rel="stylesheet" />
-{% endblock css %}
-{% block title %}
-  Home - Discover UTM
-{% endblock title %}
-{% block javascript %}
-  {{ block.super }}
-  <!-- <script src="{% static 'js/home.js' %}"></script> -->
-{% endblock javascript %}
-{% block content %}
-  <div class="container-fluid">
-    <h1>{{ organization.title }}</h1>
-    <div class="row">
-      <!-- SIDEBAR -->
-      <aside class="col-12 col-md-3 sidebar p-4">
-        <!-- Put your “other stuff” here -->
-        <h5 class="text-light">Sidebar</h5>
-        <ul class="list-unstyled">
-          <li>
-            <a href="#" class="text-muted">Link 1</a>
-          </li>
-          <li>
-            <a href="#" class="text-muted">Link 2</a>
-          </li>
-          <li>
-            <a href="#" class="text-muted">Link 3</a>
-          </li>
-        </ul>
-      </aside>
-      <!-- MAIN CONTENT -->
-      <main class="col-12 col-md-9 main-content p-4">
-        <div class="search-container mb-4">
-          <input type="text" class="search-bar" placeholder="Search posts..." />
-          <div class="filters mt-2">
-            <button class="filter-button">Most Recent</button>
-            <button class="filter-button">Most Popular</button>
-            <button class="filter-button">Following</button>
-          </div>
-        </div>
-        <!-- POSTS: vertical list -->
-        <div id="posts-list">{% include "discovery/render_posts.html" with posts=posts %}</div>
-        <div class="text-center mt-4">
-          <button class="action-button" onclick="">Refresh</button>
-        </div>
-      </main>
-    </div>
-  </div>
-{% endblock content %}
+  <head>
+    <meta charset="UTF-8" />
+    <title>Discover UTM</title>
+    <link rel="stylesheet" href="{% static 'css/discovery/home.css' %}" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="logo">
+        UTM <span>Discover</span>
+      </div>
+      <nav class="header-nav">
+        <button class="icon-button">🔔</button>
+        <button class="icon-button">👤 Login</button>
+      </nav>
+    </header>
+    <main class="content">
+      <h1>Discover UTM</h1>
+      <p class="subtitle">Find and explore club events happening around campus</p>
+      <section class="filters">
+        <input type="text" placeholder="Search events..." class="search-box" />
+        <select>
+          <option>All</option>
+        </select>
+        <select>
+          <option>Newest First</option>
+        </select>
+      </section>
+      <section id="tag-list">
+        {% for tag in tags %}<span class="tag">#{{ tag }}</span>{% endfor %}
+      </section>
+      <h2>8 Events</h2>
+      <section id="post-list">
+        {% include "posts/render_cards.html" with posts=posts %}
+      </section>
+    </main>
+  </body>
+</html>
