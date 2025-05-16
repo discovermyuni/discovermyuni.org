@@ -11,10 +11,11 @@
 {% endblock title %}
 {% block javascript %}
   {{ block.super }}
-  <script src="{% static 'js/home.js' %}"></script>
+  <!-- <script src="{% static 'js/home.js' %}"></script> -->
 {% endblock javascript %}
 {% block content %}
   <div class="container-fluid">
+    <h1>{{ organization.title }}</h1>
     <div class="row">
       <!-- SIDEBAR -->
       <aside class="col-12 col-md-3 sidebar p-4">
@@ -43,9 +44,9 @@
           </div>
         </div>
         <!-- POSTS: vertical list -->
-        <div id="posts-list">{% include "posts/render_cards.html" with posts=posts %}</div>
+        <div id="posts-list">{% include "discovery/render_posts.html" with posts=posts %}</div>
         <div class="text-center mt-4">
-          <button class="action-button" onclick="refreshPosts()">Load More</button>
+          <button class="action-button" onclick="">Refresh</button>
         </div>
       </main>
     </div>

@@ -2,6 +2,7 @@ import logging
 from pathlib import Path
 from uuid import uuid4
 
+from common.models import Organization
 from common.models import TimeStampedModel
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -23,14 +24,16 @@ def path_and_rename(instance, fp):
 
 class PostLocation(models.Model):
     name = models.CharField(_("Name"), max_length=255, primary_key=True)
+    organization = models.ForeignKey(Organization, verbose_name=_("Organization"), on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return self.name + " | " + str(self.organization)
 
 
 class Post(TimeStampedModel):
     title = models.CharField(_("Title"), max_length=255)
     description = models.TextField(_("Description"))
+    organization = models.ForeignKey(Organization, verbose_name=_("Organization"), on_delete=models.CASCADE)
     author = models.ForeignKey(User, verbose_name=_("Author"), on_delete=models.CASCADE)
     start_date = models.DateTimeField(_("Start Date"))
     end_date = models.DateTimeField(_("End Date"))
@@ -58,4 +61,10 @@ class Post(TimeStampedModel):
         super().delete(using=using, keep_parents=keep_parents)
 
     def get_absolute_url(self):
-        return reverse("posts:post-detail", kwargs={"pk": self.pk})
+        return reverse("post-detail", kwargs={"pk": self.pk})
+
+    def get_edit_url(self):
+        return reverse("dashboard:edit-post", kwargs={"pk": self.pk})
+
+    def get_delete_url(self):
+        return ""

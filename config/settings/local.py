@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "discoverutm.common",
     "discoverutm.users",
+    "discoverutm.discovery",
     "discoverutm.posts",
     "discoverutm.dashboard",
 ]

@@ -1,0 +1,9 @@
+here are all the avaliable organizations
+{% for org in organizations %}
+  <div class="card">
+    <h2>{{ org.title }}</h2>
+    <h2>{{ org.slug }}</h2>
+    <p>{{ org.description }}</p>
+    <a href="{{ org.get_absolute_url }}"">View</a>
+  </div>
+{% endfor %}

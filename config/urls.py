@@ -6,18 +6,22 @@ from django.urls import path
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    path("", include("posts.urls.pages")),
-    path("account/", include("allauth.urls")),
-    path("users/", include("users.urls")),
+    path(
+        "",
+        TemplateView.as_view(template_name="pages/home.html", content_type="text/html"),
+    ),
+    path(
+        "contact/",
+        TemplateView.as_view(template_name="pages/contact.html", content_type="text/html"),
+    ),
+    path("u/", include("discovery.urls")),
     path("post/", include("posts.urls.detail")),
     path("dashboard/", include("dashboard.urls")),
+    path("account/", include("allauth.urls")),
+    path("users/", include("users.urls")),
     path("admin/", admin.site.urls),
-    path("api/posts/", include("posts.urls.api")),
-    path(
-        "robots.txt",
-        TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
-    ),
 ]
 
 if settings.DEBUG:
+    urlpatterns += static("robots.txt", document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

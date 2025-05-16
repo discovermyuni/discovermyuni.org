@@ -1,0 +1,7 @@
+{% if posts %}
+  {% for post in posts %}
+    {% include "dashboard/card.html" with post=post %}
+  {% endfor %}
+{% else %}
+  <p class="text-muted">No posts available.</p>
+{% endif %}
