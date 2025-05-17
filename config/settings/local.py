@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+    "allauth.socialaccount.providers.github",
     "discoverutm.common",
     "discoverutm.users",
     "discoverutm.discovery",
@@ -192,6 +194,8 @@ ACCOUNT_EMAIL_VERIFICATION = "none"  # local only
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+SOCIALACCOUNT_PROVIDERS = {}
 
 
 # Posts settings

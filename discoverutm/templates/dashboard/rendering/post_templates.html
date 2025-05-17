@@ -1,6 +1,6 @@
 {% if templates %}
   {% for template in templates %}
-    {% include "dashboard/template_card.html" with template=template %}
+    {% include "dashboard/rendering/card/post_template.html" with template=template %}
   {% endfor %}
 {% else %}
   <p class="text-muted">No templates available.</p>

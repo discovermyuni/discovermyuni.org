@@ -17,24 +17,13 @@ from .models import Post
 from .serializers import PostSerializer
 
 
-def home_page_view(request):
-    try:
-        params = get_filter_parameters(request)
-        posts = filter_posts(**params)
-        context = {"posts": posts, "params": params}
-    except InvalidFilterParameterError:
-        context = {"posts": [], "params": {}}
-
-    return render(request, "posts/home.html", context)
-
-
 class PostDetailView(DetailView):
     model = Post
     template_name = "posts/detail.html"
     context_object_name = "post"
 
 
-# API views
+# api views
 
 
 @api_view(["GET"])

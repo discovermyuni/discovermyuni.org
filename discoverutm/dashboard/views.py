@@ -21,6 +21,8 @@ VALID_POST_FORM_FIELDS = (
     else ["title", "description", "location", "tags", "image"]
 )
 
+# TODO: localize all this
+
 
 @login_required_message(LOGIN_REQUIRED_MESSAGE)
 def dashboard_page_view(request):
@@ -53,7 +55,7 @@ def post_form_view(request):
 
         form = PostForm(initial=sanitized_data)
 
-    return render(request, "dashboard/post_form.html", {"form": form})
+    return render(request, "dashboard/forms/new_post.html", {"form": form})
 
 
 @login_required_message(LOGIN_REQUIRED_MESSAGE)
@@ -69,7 +71,7 @@ def post_template_form_view(request):
     else:
         form = PostForm()
 
-    return render(request, "dashboard/post_template_form.html", {"form": form})
+    return render(request, "dashboard/forms/new_post_template.html", {"form": form})
 
 
 @login_required_message(LOGIN_REQUIRED_MESSAGE)
@@ -96,4 +98,4 @@ def post_edit_view(request, pk):
         return HttpResponseRedirect(reverse("dashboard:home"))
 
     form = PostForm(instance=post)
-    return render(request, "dashboard/edit_post_form.html", {"form": form})
+    return render(request, "dashboard/forms/edit_post.html", {"form": form})

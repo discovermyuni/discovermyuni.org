@@ -15,11 +15,12 @@ urlpatterns = [
         TemplateView.as_view(template_name="pages/contact.html", content_type="text/html"),
     ),
     path("u/", include("discovery.urls")),
-    path("post/", include("posts.urls.detail")),
+    path("post/", include("posts.urls")),
     path("dashboard/", include("dashboard.urls")),
     path("account/", include("allauth.urls")),
     path("users/", include("users.urls")),
     path("admin/", admin.site.urls),
+    path("api/", include("posts.api_urls")),
 ]
 
 if settings.DEBUG:
