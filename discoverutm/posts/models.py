@@ -36,7 +36,7 @@ class Post(TimeStampedModel):
     organization = models.ForeignKey(Organization, verbose_name=_("Organization"), on_delete=models.CASCADE)
     author = models.ForeignKey(User, verbose_name=_("Author"), on_delete=models.CASCADE)
     start_date = models.DateTimeField(_("Start Date"))
-    end_date = models.DateTimeField(_("End Date"))
+    end_date = models.DateTimeField(_("End Date"), null=True, blank=True)
     location = models.ForeignKey(PostLocation, verbose_name=_("Location"), on_delete=models.PROTECT)
     tags = TaggableManager(verbose_name=_("Tags"))
     image = models.ImageField(_("Image"), upload_to=path_and_rename, blank=True)
