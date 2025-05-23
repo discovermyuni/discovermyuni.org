@@ -21,7 +21,12 @@
       <h1>Discover UTM</h1>
       <p class="subtitle">Find and explore club events happening around campus</p>
       <section class="filters">
-        <input type="text" placeholder="Search events..." class="search-box" />
+        <div class="search-container">
+          <input type="text" placeholder="Search events..." class="search-box" />
+          <button class="image-toggle" id="imageToggle" title="Toggle Images" onclick="toggleImages()">
+            <span class="toggle-icon">👁️</span>
+          </button>
+        </div>
         <select>
           <option>All</option>
         </select>
@@ -37,5 +42,18 @@
         {% include "posts/render_cards.html" with posts=posts %}
       </section>
     </main>
+
+    <script>
+      let imagesVisible = true;
+      function toggleImages() {
+        imagesVisible = !imagesVisible;
+        const postImages = document.querySelectorAll('.post-image');
+        const toggleIcon = document.querySelector('.toggle-icon');
+        postImages.forEach(img => {
+          img.style.display = imagesVisible ? 'block' : 'none';
+        });
+        toggleIcon.textContent = imagesVisible ? '👁️' : '👁️‍🗨️';
+      }
+    </script>
   </body>
 </html>
