@@ -268,8 +268,8 @@ tags
 dump.rdb
 
 ### Project template
-disvoverutm/media/
-!discoverutm/media/debug/
+discovermyuni/media/
+!discovermyuni/media/debug/
 
 .pytest_cache/
 .ipython/

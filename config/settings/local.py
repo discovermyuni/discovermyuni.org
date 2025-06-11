@@ -6,7 +6,7 @@ import environ
 env = environ.Env()
 
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent / "discoverutm"
+BASE_DIR = Path(__file__).resolve().parent.parent.parent / "discovermyuni"
 
 CONFIG_DIR = Path(__file__).resolve().parent.parent
 
@@ -35,11 +35,11 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     "allauth.socialaccount.providers.github",
     "guardian",
-    "discoverutm.common",
-    "discoverutm.users",
-    "discoverutm.discovery",
-    "discoverutm.posts",
-    "discoverutm.dashboard",
+    "discovermyuni.common",
+    "discovermyuni.users",
+    "discovermyuni.discovery",
+    "discovermyuni.posts",
+    "discovermyuni.dashboard",
 ]
 
 REST_FRAMEWORK = {

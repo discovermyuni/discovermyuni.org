@@ -1,7 +1,7 @@
 import pytest
 
-from discoverutm.users.models import User
-from discoverutm.users.tests.factories import UserFactory
+from discovermyuni.users.models import User
+from discovermyuni.users.tests.factories import UserFactory
 
 
 @pytest.fixture(autouse=True)

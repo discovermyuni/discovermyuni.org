@@ -1,7 +1,7 @@
 from django.urls import resolve
 from django.urls import reverse
 
-from discoverutm.users.models import User
+from discovermyuni.users.models import User
 
 
 def test_detail(user: User):

@@ -1,14 +1,14 @@
 volumes:
-  discoverutm_local_postgres_data: {}
-  discoverutm_local_postgres_data_backups: {}
+  discovermyuni_local_postgres_data: {}
+  discovermyuni_local_postgres_data_backups: {}
 
 services:
   django:
     build:
       context: .
       dockerfile: ./compose/local/django/Dockerfile
-    image: discoverutm_local_django
-    container_name: discoverutm_local_django
+    image: discovermyuni_local_django
+    container_name: discovermyuni_local_django
     depends_on:
       - postgres
     volumes:
@@ -25,10 +25,10 @@ services:
     build:
       context: .
       dockerfile: ./compose/production/postgres/Dockerfile
-    image: discoverutm_production_postgres
-    container_name: discoverutm_local_postgres
+    image: discovermyuni_production_postgres
+    container_name: discovermyuni_local_postgres
     volumes:
-      - discoverutm_local_postgres_data:/var/lib/postgresql/data
-      - discoverutm_local_postgres_data_backups:/backups
+      - discovermyuni_local_postgres_data:/var/lib/postgresql/data
+      - discovermyuni_local_postgres_data_backups:/backups
     env_file:
       - ./.envs/.local/.postgres

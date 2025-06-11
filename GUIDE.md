@@ -130,15 +130,15 @@ There are two main files in `allauth/layouts`: `entrance.html` and `manage.html`
 ## URLs
 There should be examples of URLs in the templates already, if you would like to take a look at all the currently added URLs, follow `config/urls.py`.
 
-That should `include()` urls from apps, defined in `discoverutm/<app_name>/urls.py`. Each app url points to a view that points to the template (and defines context)
+That should `include()` urls from apps, defined in `discovermyuni/<app_name>/urls.py`. Each app url points to a view that points to the template (and defines context)
 and most have a `name` kwarg, this is the reverse kwarg if you would like to access this url.
 
 Example:
-`discoverutm/posts/detail.py`
+`discovermyuni/posts/detail.py`
 The name for one url is `post-detail`, so you can reverse to it by doing {% url "post-detail" %}.
 
 Some url files have an app_name at the top,
-`discoverutm/dashboard/urls.py`
+`discovermyuni/dashboard/urls.py`
 
 ```python
 app_name = "dashboard"

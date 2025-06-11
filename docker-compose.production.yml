@@ -11,7 +11,7 @@ services:
       context: .
       dockerfile: ./compose/production/django/Dockerfile
 
-    image: discoverutm_production_django
+    image: discovermyuni_production_django
     depends_on:
       - postgres
     env_file:
@@ -23,7 +23,7 @@ services:
     build:
       context: .
       dockerfile: ./compose/production/traefik/Dockerfile
-    image: discoverutm_production_traefik
+    image: discovermyuni_production_traefik
     depends_on:
       - django
     volumes:

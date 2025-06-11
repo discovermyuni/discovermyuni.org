@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "discoverutm"
+name = "discovermyuni"
 version = "0.1.0"
 description = ""
 authors = [
@@ -40,7 +40,7 @@ python_files = [
 
 # ==== Coverage ====
 [tool.coverage.run]
-include = ["discoverutm/**"]
+include = ["discovermyuni/**"]
 omit = ["*/migrations/*", "*/tests/*"]
 plugins = ["django_coverage_plugin"]
 

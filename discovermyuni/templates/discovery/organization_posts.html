@@ -23,7 +23,10 @@
       <section class="filters">
         <div class="search-container">
           <input type="text" placeholder="Search events..." class="search-box" />
-          <button class="image-toggle" id="imageToggle" title="Toggle Images" onclick="toggleImages()">
+          <button class="image-toggle"
+                  id="imageToggle"
+                  title="Toggle Images"
+                  onclick="toggleImages()">
             <span class="toggle-icon">👁️</span>
           </button>
         </div>
@@ -42,9 +45,9 @@
         {% include "posts/render_cards.html" with posts=posts %}
       </section>
     </main>
-
     <script>
       let imagesVisible = true;
+
       function toggleImages() {
         imagesVisible = !imagesVisible;
         const postImages = document.querySelectorAll('.post-image');
