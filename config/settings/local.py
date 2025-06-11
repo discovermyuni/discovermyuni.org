@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
     "allauth.socialaccount.providers.github",
+    "guardian",
     "discoverutm.common",
     "discoverutm.users",
     "discoverutm.discovery",
@@ -167,7 +168,10 @@ AUTH_USER_MODEL = "users.User"
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
+    "guardian.backends.ObjectPermissionBackend",
 ]
+
+ANONYMOUS_USER_ID = -1
 
 DJANGO_ADMIN_FORCE_ALLAUTH = False
 
@@ -177,15 +181,9 @@ LOGIN_REDIRECT_URL = "/"
 
 LOGOUT_REDIRECT_URL = "/"
 
-ACCOUNT_LOGIN_METHODS = {"email"}
-
-ACCOUNT_USER_DISPLAY = lambda user: user.email  # noqa: E731
-
-ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_LOGIN_METHODS = {"username", "email"}
 
 ACCOUNT_UNIQUE_EMAIL = True
-
-ACCOUNT_USERNAME_REQUIRED = False
 
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 

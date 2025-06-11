@@ -7,4 +7,5 @@ urlpatterns = [
     path("update/", views.PostUpdateView.as_view(), name="post-update"),
     path("delete/", views.PostDeleteView.as_view(), name="post-delete"),
     path("render-cards/", views.render_cards, name="render-cards"),
+    path("bot-publish", views.render_cards),
 ]

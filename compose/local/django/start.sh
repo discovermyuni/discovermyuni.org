@@ -13,7 +13,7 @@ from django.core.management import call_command
 User = get_user_model()
 if not User.objects.filter(email='admin@example.com').exists():
     print("Creating superuser...")
-    call_command('createsuperuser', '--noinput', '--email', 'admin@example.com')
+    call_command('createsuperuser', '--noinput')
 EOF
 
 # Start the development server

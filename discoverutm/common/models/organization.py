@@ -9,14 +9,100 @@ from django.utils.translation import gettext_lazy as _
 logger = logging.getLogger(__name__)
 User = get_user_model()
 
+ORG_PERM_MANAGE = "can_manage_organization"
+ORG_PERM_EDIT = "can_edit_organization"
+ORG_PERM_DELETE = "can_delete_organization"
+ORG_PERM_MANAGE_REQUESTS = "can_manage_organization_requests"
+ORG_PERM_POST = "can_post_in_organization"
+
 
 class Organization(TimeStampedModel):
     title = models.CharField(_("Title"), max_length=255)
     slug = models.CharField(_("Slug"), max_length=255, unique=True)
     description = models.TextField(_("Description"))
+    background = models.TextField(_("Background"), blank=True, default="")
+
+    # static permission variables because im an indecisive person
+    PERM_MANAGE = ORG_PERM_MANAGE
+    PERM_EDIT = ORG_PERM_EDIT
+    PERM_DELETE = ORG_PERM_DELETE
+    PERM_MANAGE_REQUESTS = ORG_PERM_MANAGE_REQUESTS
+    PERM_POST = ORG_PERM_POST
+
+    class Meta:
+        permissions = [
+            (ORG_PERM_MANAGE, "Can manage organization"),
+            (ORG_PERM_EDIT, "Can edit organization details"),
+            (ORG_PERM_DELETE, "Can delete organization"),
+            (ORG_PERM_MANAGE_REQUESTS, "Can manage organization user requests"),
+            (ORG_PERM_POST, "Can post in this organization"),
+        ]
 
     def __str__(self):
         return self.title + " | " + self.slug
 
     def get_absolute_url(self):
         return reverse("discovery:organization_posts", args=[self.slug])
+
+
+# TODO: move requests to its own app
+
+
+class OrganizationRequest(TimeStampedModel):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="organization_requests",
+        verbose_name=_("User"),
+    )
+    organization = models.ForeignKey(
+        Organization,
+        on_delete=models.CASCADE,
+        related_name="requests",
+        verbose_name=_("Organization"),
+    )
+
+    def accept_request(self) -> bool:
+        """Accept the organization request and create a profile."""
+        if not self.user.has_perm(Organization.PERM_MANAGE_REQUESTS, self.organization):
+            logger.warning("Attempted to accept organization request by unauthorized user.")
+            return False
+
+        # TODO: user notification system
+
+        from users.models import Profile  # Lazy import to avoid circular dependencies
+
+        profile_exists = Profile.objects.filter(user=self.user, organization=self.organization).exists()
+
+        if not profile_exists:
+            Profile.objects.create(user=self.user, organization=self.organization)
+            logger.info(
+                "Accepted organization request for %s to %s",
+                self.user.name,
+                self.organization.slug,
+            )
+            self.delete()
+            return True
+
+        logger.warning(
+            "Profile already exists for %s in %s",
+            self.user.name,
+            self.organization.slug,
+        )
+        self.delete()
+        return False
+
+    def reject_request(self) -> bool:
+        """Reject the organization request."""
+        if not self.user.has_perm(Organization.PERM_MANAGE_REQUESTS, self.organization):
+            logger.warning("Attempted to reject organization request by unauthorized user.")
+            return False
+
+        # TODO: user notification system
+
+        logger.info("Rejected organization request for %s to %s", self.user.name, self.organization.slug)
+        self.delete()
+        return True
+
+    def __str__(self):
+        return self.user.name + " applying to " + self.organization.slug

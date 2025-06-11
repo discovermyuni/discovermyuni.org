@@ -6,13 +6,11 @@ from django.urls import path
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    path(
-        "",
-        TemplateView.as_view(template_name="pages/home.html", content_type="text/html"),
-    ),
+    path("", TemplateView.as_view(template_name="pages/home.html", content_type="text/html"), name="home"),
     path(
         "contact/",
         TemplateView.as_view(template_name="pages/contact.html", content_type="text/html"),
+        name="contact",
     ),
     path("u/", include("discovery.urls")),
     path("post/", include("posts.urls")),
@@ -20,7 +18,12 @@ urlpatterns = [
     path("account/", include("allauth.urls")),
     path("users/", include("users.urls")),
     path("admin/", admin.site.urls),
-    path("api/", include("posts.api_urls")),
+]
+
+urlpatterns += [
+    path("api/posts/", include("posts.api_urls")),
+    path("api/users/", include("users.api_urls")),
+    path("api/discovery/", include("discovery.api_urls")),
 ]
 
 if settings.DEBUG:
