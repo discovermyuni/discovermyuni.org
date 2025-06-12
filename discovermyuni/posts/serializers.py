@@ -2,14 +2,11 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from .models import Post
-from .models import PostLocation
 
 User = get_user_model()
 
 
-class PostSerializer(serializers.HyperlinkedModelSerializer):
-    author = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
-    location = serializers.PrimaryKeyRelatedField(queryset=PostLocation.objects.all())
+class PostSerializer(serializers.ModelSerializer):
     tags = serializers.SerializerMethodField()
 
     class Meta:
@@ -25,8 +22,9 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
             "location",
             "tags",
             "image",
+            "is_generated",
         ]
-        read_only_fields = ["is_staff", "is_superuser"]
+        read_only_fields = ["id", "author", "is_generated", "created_at"]
 
     def get_tags(self, obj):
         return list(obj.tags.values_list("name", flat=True))

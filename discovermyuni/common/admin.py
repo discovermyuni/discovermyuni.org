@@ -10,9 +10,6 @@ from guardian.shortcuts import assign_perm
 from guardian.shortcuts import get_perms
 from guardian.shortcuts import remove_perm
 
-from .models import Organization
-from .models.organization import OrganizationRequest
-
 
 class ObjectLevelPermissionForm(forms.Form):
     model_choice = forms.ChoiceField(choices=[], required=True, label="Model")
@@ -121,7 +118,3 @@ class UniversalGroupAdmin(admin.ModelAdmin):
 
 admin.site.unregister(Group)
 admin.site.register(Group, UniversalGroupAdmin)
-
-admin.site.register(Organization)
-
-admin.site.register(OrganizationRequest)

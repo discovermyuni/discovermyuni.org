@@ -7,13 +7,12 @@ from django.contrib.auth import get_user_model
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
 from posts.forms import PostForm
 
 from .forms import PostTemplateForm
 
 User = get_user_model()
-LOGIN_REQUIRED_MESSAGE = _("You need to be logged in to view the dashboard.")
+
 
 VALID_POST_FORM_FIELDS = (
     settings.VALID_POST_FORM_FIELDS
@@ -24,7 +23,7 @@ VALID_POST_FORM_FIELDS = (
 # TODO: localize all this
 
 
-@login_required_message(LOGIN_REQUIRED_MESSAGE)
+@login_required_message()
 def dashboard_page_view(request):
     user_posts = request.user.post_set.all()
     user_post_templates = request.user.posttemplate_set.all()
@@ -35,7 +34,7 @@ def dashboard_page_view(request):
     return render(request, "dashboard/home.html", context)
 
 
-@login_required_message(LOGIN_REQUIRED_MESSAGE)
+@login_required_message()
 def post_form_view(request):
     if request.method == "POST":
         form = PostForm(request.POST)
@@ -58,7 +57,7 @@ def post_form_view(request):
     return render(request, "dashboard/forms/new_post.html", {"form": form})
 
 
-@login_required_message(LOGIN_REQUIRED_MESSAGE)
+@login_required_message()
 def post_template_form_view(request):
     if request.method == "POST":
         form = PostTemplateForm(request.POST)
@@ -74,7 +73,7 @@ def post_template_form_view(request):
     return render(request, "dashboard/forms/new_post_template.html", {"form": form})
 
 
-@login_required_message(LOGIN_REQUIRED_MESSAGE)
+@login_required_message()
 def post_edit_view(request, pk):
     try:
         post = request.user.post_set.get(pk=pk)

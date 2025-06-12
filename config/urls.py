@@ -15,15 +15,17 @@ urlpatterns = [
     path("u/", include("discovery.urls")),
     path("post/", include("posts.urls")),
     path("dashboard/", include("dashboard.urls")),
+    path("myorg/", include("organizations.urls")),
     path("account/", include("allauth.urls")),
     path("users/", include("users.urls")),
     path("admin/", admin.site.urls),
 ]
 
 urlpatterns += [
-    path("api/posts/", include("posts.api_urls")),
-    path("api/users/", include("users.api_urls")),
-    path("api/discovery/", include("discovery.api_urls")),
+    path("api/posts/", include(("posts.api_urls", "posts"), namespace="posts-api")),
+    path("api/users/", include(("users.api_urls", "users"), namespace="users-api")),
+    path("api/discovery/", include(("discovery.api_urls", "discovery"), namespace="discovery-api")),
+    path("api/organizations/", include(("organizations.api_urls", "organizations"), namespace="organizations-api")),
 ]
 
 if settings.DEBUG:

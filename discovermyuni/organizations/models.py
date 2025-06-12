@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from users.models import Profile
 
 logger = logging.getLogger(__name__)
 User = get_user_model()
@@ -45,9 +46,6 @@ class Organization(TimeStampedModel):
         return reverse("discovery:organization_posts", args=[self.slug])
 
 
-# TODO: move requests to its own app
-
-
 class OrganizationRequest(TimeStampedModel):
     user = models.ForeignKey(
         User,
@@ -70,11 +68,7 @@ class OrganizationRequest(TimeStampedModel):
 
         # TODO: user notification system
 
-        from users.models import Profile  # Lazy import to avoid circular dependencies
-
-        profile_exists = Profile.objects.filter(user=self.user, organization=self.organization).exists()
-
-        if not profile_exists:
+        if not Profile.does_profile_exist(user=self.user, organization=self.organization):
             Profile.objects.create(user=self.user, organization=self.organization)
             logger.info(
                 "Accepted organization request for %s to %s",

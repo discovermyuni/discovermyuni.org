@@ -14,6 +14,8 @@ environ.Env.read_env(BASE_DIR.parent / ".envs/.local/.django")
 
 SECRET_KEY = env("SECRET_KEY")
 
+BOT_PUBLISH_API_KEY = env("BOT_PUBLISH_API_KEY")
+
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -36,9 +38,10 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.github",
     "guardian",
     "discovermyuni.common",
+    "discovermyuni.organizations",
     "discovermyuni.users",
-    "discovermyuni.discovery",
     "discovermyuni.posts",
+    "discovermyuni.discovery",
     "discovermyuni.dashboard",
 ]
 

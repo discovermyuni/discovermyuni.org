@@ -60,3 +60,8 @@ class Profile(TimeStampedModel):
 
     def __str__(self):
         return f"Profile of {self.user.name} in {self.organization.name}"
+
+    @staticmethod
+    def does_profile_exist(organization, user) -> bool:
+        """Check if the profile exists."""
+        return Profile.objects.filter(organization=organization, user=user).exists()

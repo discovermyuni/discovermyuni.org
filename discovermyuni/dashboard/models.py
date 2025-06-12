@@ -8,7 +8,6 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from posts.models import PostLocation
 from taggit.managers import TaggableManager
 
 User = get_user_model()
@@ -25,7 +24,7 @@ class PostTemplate(TimeStampedModel):
     title = models.CharField(_("Title"), max_length=255)
     description = models.TextField(_("Description"))
     author = models.ForeignKey(User, verbose_name=_("Author"), null=True, blank=True, on_delete=models.CASCADE)
-    location = models.ForeignKey(PostLocation, verbose_name=_("Location"), on_delete=models.PROTECT, null=True)
+    location = models.CharField(_("Location"), max_length=255)
     tags = TaggableManager(verbose_name=_("Tags"))
     image = models.ImageField(_("Image"), upload_to=path_and_rename, blank=True)
 
