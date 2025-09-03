@@ -1,0 +1,110 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-23 15:30-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: discovermyuni/common/decorators.py:6
+msgid "You need to be logged in to view the dashboard."
+msgstr ""
+
+#: discovermyuni/dashboard/models.py:24
+#: discovermyuni/organizations/models.py:21 discovermyuni/posts/models.py:26
+msgid "Title"
+msgstr ""
+
+#: discovermyuni/dashboard/models.py:25
+#: discovermyuni/organizations/models.py:23 discovermyuni/posts/models.py:27
+msgid "Description"
+msgstr ""
+
+#: discovermyuni/dashboard/models.py:26 discovermyuni/posts/models.py:29
+msgid "Author"
+msgstr ""
+
+#: discovermyuni/dashboard/models.py:27 discovermyuni/posts/models.py:32
+msgid "Location"
+msgstr ""
+
+#: discovermyuni/dashboard/models.py:28 discovermyuni/posts/models.py:33
+msgid "Tags"
+msgstr ""
+
+#: discovermyuni/dashboard/models.py:29 discovermyuni/posts/models.py:34
+msgid "Image"
+msgstr ""
+
+#: discovermyuni/organizations/models.py:22
+msgid "Slug"
+msgstr ""
+
+#: discovermyuni/organizations/models.py:24 discovermyuni/users/models.py:24
+#: discovermyuni/users/models.py:56
+msgid "Background"
+msgstr ""
+
+#: discovermyuni/organizations/models.py:54
+msgid "User"
+msgstr ""
+
+#: discovermyuni/organizations/models.py:60 discovermyuni/posts/models.py:28
+#: discovermyuni/users/models.py:53
+msgid "Organization"
+msgstr ""
+
+#: discovermyuni/posts/models.py:30
+msgid "Start Date"
+msgstr ""
+
+#: discovermyuni/posts/models.py:31
+msgid "End Date"
+msgstr ""
+
+#: discovermyuni/posts/models.py:36
+msgid "Generation Source"
+msgstr ""
+
+#: discovermyuni/templates/allauth/layouts/entrance.html:9
+msgid "Sign In"
+msgstr ""
+
+#: discovermyuni/users/admin.py:25
+msgid "Personal info"
+msgstr ""
+
+#: discovermyuni/users/admin.py:27
+msgid "Permissions"
+msgstr ""
+
+#: discovermyuni/users/admin.py:38
+msgid "Important dates"
+msgstr ""
+
+#: discovermyuni/users/forms.py:27 discovermyuni/users/tests/test_forms.py:35
+msgid "This email has already been taken."
+msgstr ""
+
+#: discovermyuni/users/models.py:20
+msgid "Display Name"
+msgstr ""
+
+#: discovermyuni/users/models.py:23
+msgid "Email Address"
+msgstr ""
+
+#: discovermyuni/users/tests/test_views.py:72 discovermyuni/users/views.py:33
+msgid "Information successfully updated"
+msgstr ""

@@ -9,4 +9,4 @@ class UsersConfig(AppConfig):
 
     def ready(self):
         with contextlib.suppress(ImportError):
-            import discovermyuni.users.signals  # noqa: F401
+            from . import signals  # noqa: F401, PLC0415

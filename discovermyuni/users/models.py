@@ -1,6 +1,5 @@
 from typing import ClassVar
 
-from common.models import TimeStampedModel
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.urls import reverse
@@ -41,27 +40,3 @@ class User(AbstractUser):
 
         """
         return reverse("users:detail", kwargs={"pk": self.id})
-
-
-class Profile(TimeStampedModel):
-    """User profile model to store additional organization-related information."""
-
-    organization = models.ForeignKey(
-        "common.Organization",
-        on_delete=models.CASCADE,
-        related_name="profiles",
-        verbose_name=_("Organization"),
-    )
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="profiles")
-    local_background = models.TextField(_("Background"), blank=True, default="")
-
-    class Meta:
-        constraints = [models.UniqueConstraint(fields=["organization", "user"], name="unique_org_user")]
-
-    def __str__(self):
-        return f"Profile of {self.user.name} in {self.organization.name}"
-
-    @staticmethod
-    def does_profile_exist(organization, user) -> bool:
-        """Check if the profile exists."""
-        return Profile.objects.filter(organization=organization, user=user).exists()

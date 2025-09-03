@@ -23,7 +23,6 @@ urlpatterns = [
 
 urlpatterns += [
     path("api/posts/", include(("posts.api_urls", "posts"), namespace="posts-api")),
-    path("api/users/", include(("users.api_urls", "users"), namespace="users-api")),
     path("api/discovery/", include(("discovery.api_urls", "discovery"), namespace="discovery-api")),
     path("api/organizations/", include(("organizations.api_urls", "organizations"), namespace="organizations-api")),
 ]

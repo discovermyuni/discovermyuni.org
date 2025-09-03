@@ -1,10 +1,10 @@
 from common.decorators import login_required_message
 from django.contrib.auth import get_user_model
-from django.rest_framework.decorators import api_view
-from django.rest_framework.decorators import permission_classes
-from django.rest_framework.permissions import IsAuthenticated
-from django.rest_framework.response import Response
 from django.shortcuts import render
+from rest_framework.decorators import api_view
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 from .models import OrganizationRequest
 
@@ -17,6 +17,23 @@ def manage_organizations(request):
     Returns a list of organizations the authenticated user is part of.
     """
     return render(request, "organizations/manage_organizations.html")
+
+
+@login_required_message()
+def manage_organization_details(request, organization_slug: str):
+    """
+    Returns a list of organizations the authenticated user is part of.
+    """
+    return render(request, "organizations/manage_organizations.html")
+
+
+@login_required_message()
+def manage_organization_requests(request, organization_slug: str):
+    """
+    Returns a list of organizations the authenticated user is part of.
+    """
+    return render(request, "organizations/manage_organizations.html")
+
 
 
 @api_view(["GET"])

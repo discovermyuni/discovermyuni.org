@@ -10,11 +10,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent / "discovermyuni"
 
 CONFIG_DIR = Path(__file__).resolve().parent.parent
 
-environ.Env.read_env(BASE_DIR.parent / ".envs/.local/.django")
+environ.Env.read_env(BASE_DIR.parent / ".envs/development/.django")
 
 SECRET_KEY = env("SECRET_KEY")
 
-BOT_PUBLISH_API_KEY = env("BOT_PUBLISH_API_KEY")
+BOT_PUBLISH_API_KEY = "dog"
 
 DEBUG = True
 
@@ -134,6 +134,14 @@ USE_I18N = True
 
 USE_TZ = True
 
+LANGUAGES = [
+    ("en", "English"),
+    ("es", "Spanish"),
+    ("fr", "French"),
+]
+
+LOCALE_PATHS = [BASE_DIR / "locale"]
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -197,7 +205,6 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 SOCIALACCOUNT_PROVIDERS = {}
-
 
 # Posts settings
 

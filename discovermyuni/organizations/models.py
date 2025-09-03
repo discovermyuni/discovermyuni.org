@@ -5,7 +5,6 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from users.models import Profile
 
 logger = logging.getLogger(__name__)
 User = get_user_model()
@@ -46,6 +45,31 @@ class Organization(TimeStampedModel):
         return reverse("discovery:organization_posts", args=[self.slug])
 
 
+class OrganizationProfile(TimeStampedModel):
+    """User profile model to store additional organization-related information."""
+
+    organization = models.ForeignKey(
+        Organization,
+        on_delete=models.CASCADE,
+        related_name="profiles",
+        verbose_name=_("Organization"),
+    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="profiles")
+    local_background = models.TextField(_("Background"), blank=True, default="")
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["organization", "user"], name="unique_org_user")]
+
+    def __str__(self):
+        return f"Profile of {self.user.name} in {self.organization.name}"
+
+    @staticmethod
+    def does_profile_exist(organization, user) -> bool:
+        """Check if the profile exists."""
+        return OrganizationProfile.objects.filter(organization=organization, user=user).exists()
+
+
+
 class OrganizationRequest(TimeStampedModel):
     user = models.ForeignKey(
         User,
@@ -68,8 +92,8 @@ class OrganizationRequest(TimeStampedModel):
 
         # TODO: user notification system
 
-        if not Profile.does_profile_exist(user=self.user, organization=self.organization):
-            Profile.objects.create(user=self.user, organization=self.organization)
+        if not OrganizationProfile.does_profile_exist(user=self.user, organization=self.organization):
+            OrganizationProfile.objects.create(user=self.user, organization=self.organization)
             logger.info(
                 "Accepted organization request for %s to %s",
                 self.user.name,

@@ -7,3 +7,4 @@ set -o errexit
 /wait-for-it.sh "$POSTGRES_HOST:$POSTGRES_PORT" -- echo "PostgreSQL is up - executing command"
 
 exec "$@"
+

@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from django.shortcuts import render
 from organizations.models import Organization
 from posts.exceptions import InvalidFilterParameterError
@@ -32,3 +33,11 @@ def organization_posts(request, slug=None):
     context["organization"] = org
 
     return render(request, "discovery/organization_posts.html", context)
+
+def apply_to_organization(request, organization_id: int):
+    """
+    Handles the application to an organization for the authenticated user.
+    """
+    if request.method == "POST":
+        pass
+    return redirect("discovery:home")

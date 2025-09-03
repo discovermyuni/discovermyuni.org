@@ -7,13 +7,6 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView
 from django.views.generic import RedirectView
 from django.views.generic import UpdateView
-from organizations.models import Organization
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.views import APIView
-
-from .models import Profile
-from .serializers import ProfileSerializer
 
 User = get_user_model()
 
@@ -52,26 +45,3 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 
 
 user_redirect_view = UserRedirectView.as_view()
-
-
-class ProfileAPIView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request, organization_slug, username):
-        try:
-            organization = Organization.objects.get(slug=organization_slug)
-            user = User.objects.get(username=username)
-        except Organization.DoesNotExist:
-            return Response({"error": "Organization not found"}, status=404)
-        except User.DoesNotExist:
-            return Response({"error": "User not found"}, status=404)
-
-        profile = Profile.objects.filter(organization=organization, user=user).first()
-        if not profile.exists():
-            return Response({"error": "Profile not found"}, status=404)
-
-        serializer = ProfileSerializer(profile.first())
-        return Response(serializer.data)
-
-
-profile_api_view = ProfileAPIView.as_view()

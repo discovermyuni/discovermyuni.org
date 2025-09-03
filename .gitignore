@@ -275,6 +275,7 @@ discovermyuni/media/
 .ipython/
 .env
 .envs/*
-!.envs/.local/
+!.envs/example/
 
 db.sqlite3
+.ruff_cache/
