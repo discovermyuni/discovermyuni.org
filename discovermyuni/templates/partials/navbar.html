@@ -1,0 +1,53 @@
+<!-- Navigation -->
+<div class="mb-1">
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="container-fluid">
+    <button class="navbar-toggler navbar-toggler-right"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/">Discover My University</a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        {% load is_active %}
+
+        <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <a class="nav-link {% is_active request 'discovery:browse_organizations' %}"
+                href="{% url 'discovery:browse_organizations' %}">Discovery</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% is_active request 'dashboard:home' %}"
+                href="{% url 'dashboard:home' %}">Dashboard</a>
+        </li>
+
+
+        {% if request.user.is_authenticated %}
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'users:detail' request.user.pk %}">Profile</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'account_logout' %}">Sign Out</a>
+            </li>
+        {% else %}
+            {% if ACCOUNT_ALLOW_REGISTRATION %}
+            <li class="nav-item">
+                {# URL provided by django-allauth/account/urls.py #}
+                <a id="sign-up-link" class="nav-link" href="{% url 'account_signup' %}">Sign Up</a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+            {# URL provided by django-allauth/account/urls.py #}
+            <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">Sign In</a>
+            </li>
+        {% endif %}
+
+        </ul>
+    </div>
+    </div>
+</nav>
+</div>

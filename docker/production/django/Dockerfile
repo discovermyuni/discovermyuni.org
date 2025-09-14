@@ -1,43 +1,34 @@
-# Build python using poetry then bundle into a venv
+# ---- Builder ----
 FROM python:3.12-bookworm AS builder
 RUN apt-get update && \
-    apt-get install --no-install-suggests --no-install-recommends --yes pipx curl && \
-    apt-get -y install libpq-dev gcc && \
-    curl -o /wait-for-it.sh https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh && \
-    chmod +x /wait-for-it.sh && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
+    apt-get install --no-install-recommends -y pipx curl libpq-dev gcc && \
+    rm -rf /var/lib/apt/lists/*
 ENV PATH="/root/.local/bin:${PATH}"
-RUN pipx install poetry
-RUN pipx inject poetry poetry-plugin-bundle
+RUN pipx install poetry && pipx inject poetry poetry-plugin-bundle
+
 WORKDIR /src
-COPY . .
+COPY pyproject.toml poetry.lock* ./
 RUN poetry bundle venv --python=/usr/bin/python3 --only=main /venv
+COPY . .
 
-
-# Add the venv to the final image
+# ---- Final ----
 FROM python:3.12-slim-bookworm AS final
-
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PATH="/venv/bin:${PATH}"
 
-COPY --from=builder /venv /venv
+# psycopg2 deps
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y libpq5 curl && \
+    rm -rf /var/lib/apt/lists/*
 
-# keep libpq5 for psycopg2
-RUN apt-get update && apt-get install -y libpq5 && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
+# create non-root user
+RUN useradd -m django
 WORKDIR /app
-COPY --from=builder /src /app
+COPY --from=builder /venv /venv
+COPY --chown=django:django --from=builder /src /app
+USER django
 
-COPY --from=builder /wait-for-it.sh /wait-for-it.sh
-RUN chmod +x /wait-for-it.sh
+RUN python manage.py collectstatic --noinput
 
-# copy entrypoint and dev start script
-COPY ./compose/production/django/entrypoint.sh /entrypoint.sh
-COPY ./compose/local/django/start.sh /start.sh
-
-RUN chmod +x /entrypoint.sh /start.sh
-
-ENTRYPOINT ["/entrypoint.sh"]
+HEALTHCHECK CMD curl --fail http://localhost:8000/health/ || exit 1

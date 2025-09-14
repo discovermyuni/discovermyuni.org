@@ -6,7 +6,7 @@ from posts.filter import filter_posts
 from posts.filter import get_filter_parameters
 
 
-def discovery_home(request):
+def browse_organizations(request):
     """
     Renders the discovery home page.
     """
@@ -14,7 +14,7 @@ def discovery_home(request):
     context = {
         "organizations": organizations,
     }
-    return render(request, "discovery/home.html", context)
+    return render(request, "discovery/browse_organizations.html", context)
 
 
 def organization_posts(request, slug=None):

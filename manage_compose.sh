@@ -15,6 +15,7 @@ show_help() {
     echo "  build           - Build python image"
     echo "  up              - Start up containers"
     echo "  down            - Stop containers"
+    echo "  restart         - Restart containers"
     echo "  prune           - Remove containers and their volumes"
     echo "  logs            - View container logs"
     echo "  seed            - Seed sample data"
@@ -25,6 +26,7 @@ show_help() {
     echo "  $0 build"
     echo "  $0 up"
     echo "  $0 down"
+    echo "  $0 restart"
     echo "  $0 prune --volumes"
     echo "  $0 logs django"
     echo "  $0 seed [--mode clear]"
@@ -48,6 +50,12 @@ up() {
 down() {
     echo "Stopping containers..."
     docker compose -f "$COMPOSE_FILE" down
+}
+
+# Function to restart containers
+restart() {
+    echo "Restarting containers..."
+    docker compose -f "$COMPOSE_FILE" restart "$@"
 }
 
 # Function to remove containers and their volumes
@@ -88,6 +96,10 @@ case "${1:-help}" in
         ;;
     down)
         down
+        ;;
+    restart)
+        shift  # Remove 'restart' from arguments
+        restart "$@"
         ;;
     prune)
         shift  # Remove 'prune' from arguments

@@ -1,62 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-  {% load static %}
+{% extends 'base.html' %}
+{% load static %}
 
-  <head>
-    <meta charset="UTF-8" />
-    <title>Discover UTM</title>
-    <link rel="stylesheet" href="{% static 'css/discovery/home.css' %}" />
-  </head>
-  <body>
-    <header class="site-header">
-      <div class="logo">
-        UTM <span>Discover</span>
-      </div>
-      <nav class="header-nav">
-        <button class="icon-button">🔔</button>
-        <button class="icon-button">👤 Login</button>
-      </nav>
-    </header>
-    <main class="content">
-      <h1>Discover UTM</h1>
-      <p class="subtitle">Find and explore club events happening around campus</p>
-      <section class="filters">
-        <div class="search-container">
-          <input type="text" placeholder="Search events..." class="search-box" />
-          <button class="image-toggle"
-                  id="imageToggle"
-                  title="Toggle Images"
-                  onclick="toggleImages()">
-            <span class="toggle-icon">👁️</span>
-          </button>
-        </div>
-        <select>
-          <option>All</option>
-        </select>
-        <select>
-          <option>Newest First</option>
-        </select>
-      </section>
-      <section id="tag-list">
-        {% for tag in tags %}<span class="tag">#{{ tag }}</span>{% endfor %}
-      </section>
-      <h2>8 Events</h2>
-      <section id="post-list">
-        {% include "posts/render_cards.html" with posts=posts %}
-      </section>
-    </main>
-    <script>
-      let imagesVisible = true;
+{% block title %}u/{{slug}} | DiscoverMyUni{% endblock title %}
 
-      function toggleImages() {
-        imagesVisible = !imagesVisible;
-        const postImages = document.querySelectorAll('.post-image');
-        const toggleIcon = document.querySelector('.toggle-icon');
-        postImages.forEach(img => {
-          img.style.display = imagesVisible ? 'block' : 'none';
-        });
-        toggleIcon.textContent = imagesVisible ? '👁️' : '👁️‍🗨️';
-      }
-    </script>
-  </body>
-</html>
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/discovery.css' %}" />
+{% endblock css %}
+
+{% block content %}
+<main class="content">
+  <h1>Discover UTM</h1>
+  <p class="subtitle">Find and explore club events happening around campus</p>
+  <section class="filters">
+    <div class="search-container">
+      <input type="text" placeholder="Search events..." class="search-box" />
+      <button class="image-toggle" id="imageToggle" title="Toggle Images" onclick="toggleImages()">
+        <span class="toggle-icon">👁️</span>
+      </button>
+    </div>
+    <select>
+      <option>All</option>
+    </select>
+    <select>
+      <option>Newest First</option>
+    </select>
+  </section>
+  <section id="tag-list">
+    {% for tag in tags %}<span class="tag">#{{ tag }}</span>{% endfor %}
+  </section>
+  <h2>8 Events</h2>
+  <section id="post-list">
+    {% include "posts/render_cards.html" with posts=posts %}
+  </section>
+</main>
+<script>
+  let imagesVisible = true;
+
+
+</script>
+{% endblock content %}
+
+{% block inline_javascript %}
+<script>
+  function toggleImages() {
+    imagesVisible = !imagesVisible;
+    const postImages = document.querySelectorAll('.post-image');
+    const toggleIcon = document.querySelector('.toggle-icon');
+    postImages.forEach(img => {
+      img.style.display = imagesVisible ? 'block' : 'none';
+    });
+    toggleIcon.textContent = imagesVisible ? '👁️' : '👁️‍🗨️';
+  }
+</script>
+{% endblock inline_javascript %}

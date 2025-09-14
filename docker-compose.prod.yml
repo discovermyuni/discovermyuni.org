@@ -1,0 +1,61 @@
+version: "3.9"
+
+volumes:
+  discovermyuni_postgres_data: {}
+  discovermyuni_postgres_backups: {}
+  static_data: {}
+  media_data: {}
+
+networks:
+  discovermyuni_network:
+    driver: bridge
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: ./docker/production/django/Dockerfile
+    container_name: discovermyuni_production_django
+    env_file:
+      - ./.envs/production/.django
+    command: gunicorn discovermyuni.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - static_data:/app/static
+      - media_data:/app/media
+    restart: unless-stopped
+    networks:
+      - discovermyuni_network
+
+  nginx:
+    build:
+      context: ./docker/production/nginx
+      dockerfile: Dockerfile
+    image: discovermyuni_production_nginx:latest
+    container_name: discovermyuni_nginx
+    depends_on:
+      - django
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - static_data:/app/static
+      - media_data:/app/media
+      - ./docker/production/nginx/certbot/conf:/etc/letsencrypt
+      - ./docker/production/nginx/certbot/www:/var/www/certbot
+    restart: unless-stopped
+    networks:
+      - discovermyuni_network
+
+  certbot:
+    image: certbot/certbot
+    container_name: discovermyuni_certbot
+    volumes:
+      - ./docker/production/nginx/certbot/conf:/etc/letsencrypt
+      - ./docker/production/nginx/certbot/www:/var/www/certbot
+    entrypoint: >
+      sh -c "trap exit TERM; while :; do
+      certbot renew --webroot -w /var/www/certbot;
+      sleep 12h & wait $${!};
+      done"
+    networks:
+      - discovermyuni_network

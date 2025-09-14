@@ -1,8 +1,8 @@
 import random
 from datetime import timedelta
 from types import SimpleNamespace
-from zoneinfo import ZoneInfo
 
+from django.utils import timezone
 from django.apps import apps
 from django.conf import settings
 from django.core.files import File
@@ -87,25 +87,25 @@ def random_banner():
 
 
 def create_fixed_users(models):
-    return [
-        models.User(
-            username="fixeduser1",
-            email="fixeduser1@example.com",
-            password="password123",  # noqa: S106
-        ),
-        models.User(
-            username="fixeduser2",
-            email="fixeduser2@example.com",
-            password="password123",  # noqa: S106
-        ),
-    ]
+    users = []
+
+    u1 = models.User(username="fixeduser1", email="fixeduser1@example.com")
+    u1.set_password("password123")
+    users.append(u1)
+
+    u2 = models.User(username="fixeduser2", email="fixeduser2@example.com")
+    u2.set_password("password123")
+    users.append(u2)
+
+    return users
 
 def create_random_posts(models, count=15):
-    start_date = fake.date_time_this_year(tzinfo=ZoneInfo(settings.TIME_ZONE))
-    end_date = start_date + timedelta(days=1)
+    posts = []
+    for _ in range(count):
+        start_date = fake.date_time_this_year(tzinfo=timezone.get_default_timezone())
+        end_date = start_date + timedelta(days=1)
 
-    return [
-        models.Post(
+        post = models.Post.objects.create(
             title=fake.sentence(),
             description=fake.text(max_nb_chars=400),
             organization=models.Organization.objects.first(),
@@ -113,10 +113,12 @@ def create_random_posts(models, count=15):
             start_date=start_date,
             end_date=end_date,
             location=f"{fake.city()}, {fake.country()}",
-            tags=",".join(fake.words(nb=3)),
             image=random_banner(),
-        ) for _ in range(count)
-    ]
+        )
+        # add random tags after creation
+        post.tags.add(*fake.words(nb=3))
+        posts.append(post)
+    return posts
 
 
 def run_seed(command, mode, count):

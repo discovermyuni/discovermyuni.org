@@ -1,2 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home | DiscoverMyUni
+{% endblock title %}
+
+{% block content %}
+
 home :)
-<a href="{% url 'discovery:home' %}">discover organizations</a>
+<a href="{% url 'discovery:browse_organizations' %}">discover organizations</a>
+
+{% endblock %}

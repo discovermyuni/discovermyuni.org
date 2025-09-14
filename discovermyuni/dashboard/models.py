@@ -41,7 +41,7 @@ class PostTemplate(TimeStampedModel):
         kwargs = {
             "title": self.title,
             "description": self.description,
-            "location_id": self.location.name if self.location else None,
+            "location_id": self.location,
             "tags": ",".join(tag.name for tag in self.tags.all()),
             "image": self.image.url if self.image else None,
         }

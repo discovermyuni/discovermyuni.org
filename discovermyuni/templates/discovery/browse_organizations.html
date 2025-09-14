@@ -1,3 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
 here are all the avaliable organizations
 {% for org in organizations %}
   <div class="card">
@@ -7,3 +11,5 @@ here are all the avaliable organizations
     <a href="{{ org.get_absolute_url }}"">View</a>
   </div>
 {% endfor %}
+
+{% endblock content %}
