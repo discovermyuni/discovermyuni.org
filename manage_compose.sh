@@ -43,7 +43,7 @@ build() {
 # Function to start up containers
 up() {
     echo "Starting up containers..."
-    docker compose -f "$COMPOSE_FILE" up -d --remove-orphans
+    docker compose -f "$COMPOSE_FILE" up --remove-orphans
 }
 
 # Function to stop containers
