@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y \
     git \
     libssl-dev \
     gettext \
+    dos2unix \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -49,6 +50,9 @@ RUN chmod +x /entrypoint.sh
 # Copy start script
 COPY docker/development/django/start.sh /start.sh
 RUN chmod +x /start.sh
+
+# Normalize line endings to avoid `exec: /start.sh: not found` due to CRLF
+RUN dos2unix /entrypoint.sh /start.sh || true
 
 # Set proper permissions
 RUN chown -R root:root /app

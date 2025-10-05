@@ -4,12 +4,32 @@
   Page not found
 {% endblock title %}
 {% block content %}
-  <h1>Page not found</h1>
-  <p>
-    {% if exception %}
-      {{ exception }}
-    {% else %}
-      This is not the page you were looking for.
-    {% endif %}
-  </p>
+  <div class="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
+    <div class="card-surface p-12 max-w-md w-full">
+      <div class="mb-6">
+        <svg class="w-20 h-20 mx-auto text-slate-400 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+      </div>
+      <h1 class="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-4">Page Not Found</h1>
+      <p class="text-slate-600 dark:text-slate-400 mb-6">
+        {% if exception %}
+          {{ exception }}
+        {% else %}
+          Sorry, we couldn't find the page you were looking for.
+        {% endif %}
+      </p>
+      <div class="space-y-3">
+        <a href="/" class="btn-brand w-full">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+          </svg>
+          Back to Home
+        </a>
+        <a href="{% url 'discovery:browse_organizations' %}" class="btn-outline w-full">
+          Explore Communities
+        </a>
+      </div>
+    </div>
+  </div>
 {% endblock content %}

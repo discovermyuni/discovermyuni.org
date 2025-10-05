@@ -1,1 +1,61 @@
-manage my organizations
+{% extends 'base.html' %}
+{% block title %}Organizations | Manage{% endblock title %}
+{% block content %}
+<div class="flex flex-col gap-8">
+	<header class="card-surface p-6 flex flex-wrap gap-6 items-center">
+		<div class="flex items-center justify-center w-14 h-14 rounded-full bg-brand-600 text-white font-semibold">Org</div>
+		<div class="flex-1 min-w-[240px]">
+			<h1 class="text-xl font-semibold mb-1">Manage Organizations</h1>
+			<p class="text-xs text-slate-500 dark:text-slate-400">Create, review and update organizations you administer.</p>
+		</div>
+		<div class="ml-auto flex gap-2">
+			<button class="btn-brand py-2 px-4 text-sm cursor-not-allowed" disabled title="Planned create">Create Organization</button>
+		</div>
+	</header>
+
+	<section class="grid gap-6 md:grid-cols-2">
+		<div class="card-surface p-5 flex flex-col gap-4">
+			<div class="flex items-center justify-between">
+				<h2 class="text-sm font-semibold tracking-wide text-slate-600 dark:text-slate-300">Your Organizations</h2>
+				<span class="text-[11px] text-slate-500">(static)</span>
+			</div>
+			<ul class="divide-y divide-slate-200 dark:divide-slate-700 text-sm">
+				<li class="py-3 flex items-center gap-3">
+					<div class="w-9 h-9 rounded-full bg-brand-500 text-white flex items-center justify-center text-xs font-semibold">UT</div>
+					<div class="flex-1 min-w-0">
+						<p class="font-medium truncate">u/utm</p>
+						<p class="text-[11px] text-slate-500 truncate">University of Toronto Mississauga</p>
+					</div>
+					<a href="#" class="btn-outline px-3 py-1.5 text-xs cursor-not-allowed" title="View (static)" disabled>View</a>
+				</li>
+				<li class="py-3 flex items-center gap-3">
+					<div class="w-9 h-9 rounded-full bg-brand-500 text-white flex items-center justify-center text-xs font-semibold">QU</div>
+					<div class="flex-1 min-w-0">
+						<p class="font-medium truncate">u/queens</p>
+						<p class="text-[11px] text-slate-500 truncate">Queens University</p>
+					</div>
+					<a href="#" class="btn-outline px-3 py-1.5 text-xs cursor-not-allowed" disabled>View</a>
+				</li>
+			</ul>
+		</div>
+		<div class="card-surface p-5 flex flex-col gap-4">
+			<div class="flex items-center justify-between">
+				<h2 class="text-sm font-semibold tracking-wide text-slate-600 dark:text-slate-300">Pending Requests</h2>
+				<span class="text-[11px] text-slate-500">(static)</span>
+			</div>
+			<div class="text-xs text-slate-500 dark:text-slate-400">No pending organization join or creation requests.</div>
+		</div>
+	</section>
+
+	<section class="card-surface p-5">
+		<h2 class="text-sm font-semibold tracking-wide text-slate-600 dark:text-slate-300 mb-4">Roadmap</h2>
+		<ol class="list-decimal ms-5 text-xs space-y-2 text-slate-600 dark:text-slate-400">
+			<li>Organization creation & approval workflow</li>
+			<li>Role-based permissions (owner / admin / member)</li>
+			<li>Join requests + moderation queue</li>
+			<li>Organization-specific theming & banner</li>
+			<li>Analytics: member count, engagement metrics</li>
+		</ol>
+	</section>
+</div>
+{% endblock content %}

@@ -133,20 +133,40 @@ def run_seed(command, mode, count):
         clear_data(models)
         command.stdout.write("Cleared all data.")
         return
-
+    seed_factories = []
 
     if mode == MODE_FIXED:
         clear_data(models)
         command.stdout.write("Cleared all data before fixed initialization.")
-
         seed_factories = [
             ("organization", create_fixed_organizations, models),
             ("user", create_fixed_users, models),
             ("post", create_random_posts, models, count),
         ]
+    elif mode == MODE_RANDOM:
+        # Ensure there is at least one organization & some users to attach posts to
+        if models.Organization.objects.count() == 0:
+            command.stdout.write("No organizations found. Creating fixed organizations for context...")
+            for org in create_fixed_organizations(models):
+                org.save()
+        if models.User.objects.filter(is_superuser=False).count() < 2:
+            command.stdout.write("Not enough users found. Creating fixed users for context...")
+            for user in create_fixed_users(models):
+                user.save()
+        seed_factories = [
+            ("post", create_random_posts, models, count),
+        ]
+    else:
+        command.stderr.write(command.style.ERROR(f"Unknown mode: {mode}"))
+        return
 
     for key, factory, *args in seed_factories:
-        command.stdout.write(f"Creating {key}{'s' if key[-1] == 's' else ''}...")
-        for obj in factory(*args) or []:
-            obj.save()
+        plural = "s" if key[-1] != "s" else "es"
+        command.stdout.write(f"Creating {key}{plural if factory(*args) else ''}...")
+        # We call the factory only once; store result to avoid double creation
+        created = factory(*args) or []
+        for obj in created:
+            # Some factories (like create_random_posts) already persist objects
+            if not getattr(obj, "pk", None):
+                obj.save()
             command.stdout.write(f"Created {key}: {obj!s}")

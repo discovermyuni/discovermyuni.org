@@ -1,56 +1,64 @@
 {% extends 'base.html' %}
-{% load static %}
+{% block title %}u/{{ organization.slug }} | DiscoverMyUni{% endblock title %}
 
-{% block title %}u/{{slug}} | DiscoverMyUni{% endblock title %}
+{% block sidebar %}
+<div class="card-surface p-4 text-sm">
+  <h2 class="text-xs font-semibold tracking-wide mb-3 text-slate-600 dark:text-slate-300">ABOUT COMMUNITY</h2>
+  <p class="text-slate-600 dark:text-slate-300 mb-4 text-xs leading-relaxed">{{ organization.description }}</p>
+  <div class="flex gap-6 mb-4">
+    <div>
+      <div class="text-base font-semibold">{{ posts|length|default:"0" }}</div>
+      <div class="text-[10px] uppercase tracking-wide text-slate-500">Posts</div>
+    </div>
+    <div>
+      <div class="text-base font-semibold">--</div>
+      <div class="text-[10px] uppercase tracking-wide text-slate-500">Members</div>
+    </div>
+  </div>
+  <button class="btn-brand w-full py-2 text-sm cursor-not-allowed" disabled title="Join (planned)">Join</button>
+  <div class="border-t my-4 border-[var(--dmu-card-border)]"></div>
+  <div class="text-[11px] text-slate-500 dark:text-slate-400">Created {{ organization.created|date:"M Y" }}</div>
+</div>
 
-{% block css %}
+<div class="card-surface p-4 text-sm">
+  <h2 class="text-xs font-semibold tracking-wide mb-3 text-slate-600 dark:text-slate-300">COMMUNITY OPTIONS</h2>
+  <button class="btn-outline w-full py-2 mb-2 text-xs cursor-not-allowed" disabled>Notification Settings</button>
+  <button class="btn-outline w-full py-2 text-xs cursor-not-allowed" disabled>Community Theme</button>
+</div>
+
+<div class="card-surface p-4 text-sm">
+  <h2 class="text-xs font-semibold tracking-wide mb-3 text-slate-600 dark:text-slate-300">MODERATORS</h2>
+  <div class="flex flex-col gap-2 text-xs">
+    <div class="flex items-center gap-2">
+      <div class="flex items-center justify-center rounded-full bg-slate-400 dark:bg-slate-600 text-white w-6 h-6 text-[10px]">M</div>
+      <span>u/moderator</span>
+    </div>
+  </div>
+  <button class="mt-3 text-xs text-brand-600 dark:text-brand-400 cursor-not-allowed" disabled>View All Moderators</button>
+</div>
 {{ block.super }}
-<link rel="stylesheet" href="{% static 'css/discovery.css' %}" />
-{% endblock css %}
+{% endblock sidebar %}
 
 {% block content %}
-<main class="content">
-  <h1>Discover UTM</h1>
-  <p class="subtitle">Find and explore club events happening around campus</p>
-  <section class="filters">
-    <div class="search-container">
-      <input type="text" placeholder="Search events..." class="search-box" />
-      <button class="image-toggle" id="imageToggle" title="Toggle Images" onclick="toggleImages()">
-        <span class="toggle-icon">👁️</span>
-      </button>
-    </div>
-    <select>
-      <option>All</option>
-    </select>
-    <select>
-      <option>Newest First</option>
-    </select>
-  </section>
-  <section id="tag-list">
-    {% for tag in tags %}<span class="tag">#{{ tag }}</span>{% endfor %}
-  </section>
-  <h2>8 Events</h2>
-  <section id="post-list">
-    {% include "posts/render_cards.html" with posts=posts %}
-  </section>
-</main>
-<script>
-  let imagesVisible = true;
+<div class="card-surface p-5 mb-6 flex flex-wrap gap-4 items-center">
+  <div class="flex items-center justify-center rounded-full bg-brand-600 text-white w-14 h-14 text-base font-semibold">{{ organization.slug|slice:':2'|upper }}</div>
+  <div class="flex-1 min-w-[220px]">
+    <h1 class="text-xl font-semibold mb-1">u/{{ organization.slug }}</h1>
+    <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-3 leading-relaxed">{{ organization.description }}</p>
+  </div>
+  <div class="flex gap-2 ml-auto">
+    <button class="btn-outline py-2 px-4 text-xs cursor-not-allowed" disabled title="Planned join">Join</button>
+  </div>
+</div>
 
+{% include 'posts/_composer.html' %}
 
-</script>
+<div id="post-feed" class="flex flex-col gap-4">
+  {% include 'posts/render_cards.html' with posts=posts %}
+</div>
+
+<div class="text-center my-6">
+  <button id="loadMore" class="btn-outline px-6 py-2 text-sm cursor-not-allowed" disabled title="Planned infinite scroll">Load More</button>
+  <!-- planned: GET /api/posts/?organization={{ organization.pk }}&cursor=... -->
+</div>
 {% endblock content %}
-
-{% block inline_javascript %}
-<script>
-  function toggleImages() {
-    imagesVisible = !imagesVisible;
-    const postImages = document.querySelectorAll('.post-image');
-    const toggleIcon = document.querySelector('.toggle-icon');
-    postImages.forEach(img => {
-      img.style.display = imagesVisible ? 'block' : 'none';
-    });
-    toggleIcon.textContent = imagesVisible ? '👁️' : '👁️‍🗨️';
-  }
-</script>
-{% endblock inline_javascript %}

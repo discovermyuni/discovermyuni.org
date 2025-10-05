@@ -1,12 +1,44 @@
 {% extends 'base.html' %}
 
-{% block title %}
-Contact | DiscoverMyUni
-{% endblock title %}
+{% block title %}Contact | DiscoverMyUni{% endblock title %}
 
 {% block content %}
+<div class="reddit-card">
+  <h1 class="h4 fw-bold mb-3">Contact Us</h1>
+  <p class="mb-4">Have questions or feedback? We'd love to hear from you.</p>
+  
+  <form class="row g-3" onsubmit="return false;">
+    <div class="col-md-6">
+      <label for="contactName" class="form-label small fw-semibold">Name</label>
+      <input type="text" class="form-control" id="contactName" placeholder="Your name" disabled />
+    </div>
+    <div class="col-md-6">
+      <label for="contactEmail" class="form-label small fw-semibold">Email</label>
+      <input type="email" class="form-control" id="contactEmail" placeholder="you@example.com" disabled />
+    </div>
+    <div class="col-12">
+      <label for="contactMessage" class="form-label small fw-semibold">Message</label>
+      <textarea class="form-control" id="contactMessage" rows="5" placeholder="Your message..." disabled></textarea>
+    </div>
+    <div class="col-12">
+      <button class="btn btn-primary cursor-not-allowed" disabled title="Contact form (static demo)">Send Message</button>
+      <!-- planned endpoint: POST /api/contact/ -->
+    </div>
+  </form>
+</div>
 
-contact :)
-<a href="{% url 'discovery:home' %}">discover organizations</a>
-
+<div class="row g-3 mt-3">
+  <div class="col-md-6">
+    <div class="reddit-card">
+      <h3 class="h6 fw-semibold mb-2">📧 Email</h3>
+      <p class="small mb-0">support@discovermyuni.org</p>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="reddit-card">
+      <h3 class="h6 fw-semibold mb-2">🌐 Community</h3>
+      <p class="small mb-0"><a href="{% url 'discovery:browse_organizations' %}" class="text-link">Browse Communities</a></p>
+    </div>
+  </div>
+</div>
 {% endblock %}

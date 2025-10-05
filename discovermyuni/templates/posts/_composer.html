@@ -1,0 +1,17 @@
+{% comment %}
+Static post composer (no backend mutation). Planned endpoint: POST /api/posts/compose
+{% endcomment %}
+<div class="card-surface mb-5 p-4 composer-box">
+  <form class="flex flex-col gap-3" onsubmit="return false;">
+    <div class="flex gap-3 items-center">
+      <div class="flex items-center justify-center rounded-full bg-slate-300 dark:bg-slate-600 text-slate-800 dark:text-slate-100 w-10 h-10 text-sm font-semibold">{{ request.user.username|default:'U'|slice:':1'|upper }}</div>
+      <input class="w-full rounded-md border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-700/40 px-3 py-2 text-sm cursor-pointer" placeholder="Create a post (static demo)..." disabled />
+    </div>
+    <div class="flex gap-2 flex-wrap text-xs">
+      <button class="btn-outline px-3 py-1.5 cursor-not-allowed" disabled title="Add text">Text</button>
+      <button class="btn-outline px-3 py-1.5 cursor-not-allowed" disabled title="Add image">Image</button>
+      <button class="btn-outline px-3 py-1.5 cursor-not-allowed" disabled title="Add link">Link</button>
+      <button class="btn-outline px-3 py-1.5 cursor-not-allowed" disabled title="Planned flair">Flair</button>
+    </div>
+  </form>
+</div>

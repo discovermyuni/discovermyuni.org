@@ -1,12 +1,70 @@
 {% extends 'base.html' %}
 
-{% block title %}
-Home | DiscoverMyUni
-{% endblock title %}
+{% block title %}Home | DiscoverMyUni{% endblock title %}
 
 {% block content %}
+<section class="relative overflow-hidden rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] shadow-sm-brand p-10 md:p-14 flex flex-col items-center text-center isolate">
+  <div class="absolute inset-0 bg-gradient-to-br from-brand-500/10 via-transparent to-brand-600/10 pointer-events-none"></div>
+  <h1 class="text-3xl md:text-5xl font-bold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-brand-500 to-brand-700 dark:from-brand-300 dark:to-brand-500">Discover campus communities & events</h1>
+  <p class="max-w-2xl text-base md:text-lg text-slate-600 dark:text-slate-300 mb-6">A unified hub to browse organizations, join groups, and keep up with what's happening across your university.</p>
+  <div class="flex flex-wrap justify-center gap-3">
+    <a href="{% url 'discovery:browse_organizations' %}" class="px-5 py-2.5 rounded-md font-medium bg-brand-600 hover:bg-brand-500 text-white shadow focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-1 dark:focus:ring-offset-slate-900 transition">Browse Communities</a>
+    <a href="{% url 'dashboard:home' %}" class="px-5 py-2.5 rounded-md font-medium border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700/40 transition">Dashboard</a>
+  </div>
+  <div class="mt-8 flex flex-col sm:flex-row gap-4 text-xs text-slate-500 dark:text-slate-400">
+    <div class="flex items-center gap-1"><span class="text-brand-600">●</span> Real organizations</div>
+    <div class="flex items-center gap-1"><span class="text-brand-600">●</span> Event‑centric posts</div>
+    <div class="flex items-center gap-1"><span class="text-brand-600">●</span> Coming: live RSVPs</div>
+  </div>
+</section>
 
-home :)
-<a href="{% url 'discovery:browse_organizations' %}">discover organizations</a>
+<section class="mt-10 grid gap-6 md:grid-cols-3">
+  <div class="rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] p-5 flex flex-col gap-2 shadow-sm-brand">
+    <h3 class="text-sm font-semibold tracking-wide text-slate-700 dark:text-slate-200 flex items-center gap-1">📚 <span>Discover Events</span></h3>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Browse upcoming and recent posts from organizations across campus in a unified feed.</p>
+  </div>
+  <div class="rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] p-5 flex flex-col gap-2 shadow-sm-brand">
+    <h3 class="text-sm font-semibold tracking-wide text-slate-700 dark:text-slate-200 flex items-center gap-1">🎯 <span>Join Communities</span></h3>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Follow clubs and groups you care about; personalized organization dashboards coming soon.</p>
+  </div>
+  <div class="rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] p-5 flex flex-col gap-2 shadow-sm-brand">
+    <h3 class="text-sm font-semibold tracking-wide text-slate-700 dark:text-slate-200 flex items-center gap-1">✨ <span>Share & Engage</span></h3>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Create posts, attach images, and drive participation—engagement tools will expand over time.</p>
+  </div>
+</section>
 
+<section class="mt-12 grid gap-6 lg:grid-cols-3">
+  <div class="lg:col-span-2 rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6 shadow-sm-brand">
+    <h2 class="text-base font-semibold mb-4 tracking-wide text-slate-700 dark:text-slate-200 flex items-center gap-2">🚀 Roadmap Preview</h2>
+    <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+      <li class="flex gap-2"><span class="text-brand-600">•</span> Inline composer with image & link enrichment</li>
+      <li class="flex gap-2"><span class="text-brand-600">•</span> Join / request membership workflow for organizations</li>
+      <li class="flex gap-2"><span class="text-brand-600">•</span> Voting & relevance ranking for discovery</li>
+      <li class="flex gap-2"><span class="text-brand-600">•</span> Infinite scroll + skeleton loading states</li>
+      <li class="flex gap-2"><span class="text-brand-600">•</span> Saved posts & personal collections</li>
+      <li class="flex gap-2"><span class="text-brand-600">•</span> Event RSVP & calendar export (iCal)</li>
+    </ul>
+  </div>
+  <div class="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6 shadow-sm-brand flex flex-col gap-4">
+    <h2 class="text-base font-semibold tracking-wide text-slate-700 dark:text-slate-200">🎨 Theme</h2>
+    <p class="text-sm text-slate-600 dark:text-slate-400">Dark mode persists automatically. A future update will let you pick accent colors per organization.</p>
+    <button id="themeToggleTailwind" class="px-4 py-2 rounded-md text-sm font-medium bg-slate-800 text-white dark:bg-slate-200 dark:text-slate-900 hover:opacity-90 transition">Toggle Theme</button>
+  </div>
+</section>
+
+{% block inline_javascript %}
+{{ block.super }}
+<script>
+  (function(){
+    const btn=document.getElementById('themeToggleTailwind');
+    if(btn){
+      btn.addEventListener('click',()=>{
+        document.body.classList.toggle('theme-dark');
+        document.body.classList.toggle('dark');
+        localStorage.setItem('theme', document.body.classList.contains('theme-dark') ? 'dark':'light');
+      });
+    }
+  })();
+</script>
+{% endblock inline_javascript %}
 {% endblock %}

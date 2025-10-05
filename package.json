@@ -1,0 +1,18 @@
+{
+  "name": "discovermyuni-frontend",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "tailwindcss -i ./discovermyuni/static/css/tailwind.css -o ./discovermyuni/static/css/tailwind.build.css --watch",
+    "build": "tailwindcss -i ./discovermyuni/static/css/tailwind.css -o ./discovermyuni/static/css/tailwind.build.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.10",
+    "postcss": "^8.4.41",
+    "autoprefixer": "^10.4.20",
+    "@tailwindcss/forms": "^0.5.9",
+    "@tailwindcss/typography": "^0.5.13",
+    "@tailwindcss/line-clamp": "^0.4.4",
+    "@tailwindcss/aspect-ratio": "^0.4.2"
+  }
+}

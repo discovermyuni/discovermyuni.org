@@ -1,37 +1,73 @@
 {% extends "base.html" %}
-
 {% load static %}
 
 {% block css %}
   {{ block.super }}
   <link href="{% static 'css/dashboard.css' %}" rel="stylesheet" />
 {% endblock css %}
-{% block title %}
-  Dashboard
-{% endblock title %}
+
+{% block title %}Dashboard{% endblock title %}
+
 {% block content %}
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        <h1>Dashboard</h1>
-        <p>signed in as {{ request.user }}</p>
-      </div>
+<!-- Welcome header with modern design -->
+<div class="modern-card p-8 mb-8">
+  <div class="flex items-center gap-6">
+    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-brand-500 to-brand-600 text-white flex items-center justify-center text-xl font-bold shadow-lg">
+      {{ request.user.username|default:'U'|slice:':1'|upper }}
     </div>
-    <div class="row">
-      <div class="col">
-        <h2>My Post Templates</h2>
-        <a href="{% url 'dashboard:new-template' %}">Create New Post Template</a>
-        <div id="post-templates-list">
-          {% include "dashboard/rendering/post_templates.html" with templates=user_post_templates %}
-        </div>
-      </div>
+    <div class="flex-1">
+      <h1 class="text-3xl font-bold mb-2" style="color: var(--dmu-text);">Welcome back, {{ request.user.first_name|default:request.user.username }}!</h1>
+      <p class="text-base" style="color: var(--dmu-text-muted);">Manage your posts and templates from your dashboard</p>
     </div>
-    <div class="row">
-      <div class="col">
-        <h2>My Posts</h2>
-        <a href="{% url 'dashboard:new-post' %}">Create New Post</a>
-        <div id="posts-list">{% include "dashboard/rendering/posts.html" with posts=user_posts %}</div>
-      </div>
+    <div class="flex items-center gap-3">
+      <a href="{% url 'dashboard:new-post' %}" class="btn-brand px-6 py-3 text-sm font-medium rounded-lg">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        </svg>
+        New Post
+      </a>
     </div>
   </div>
+</div>
+
+<!-- Content sections with improved spacing -->
+<div class="space-y-8">
+  <!-- My Posts Section -->
+  <div class="modern-card p-8">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h2 class="text-2xl font-bold mb-1" style="color: var(--dmu-text);">My Posts</h2>
+        <p class="text-sm" style="color: var(--dmu-text-muted);">Manage your published and draft posts</p>
+      </div>
+      <a href="{% url 'dashboard:new-post' %}" class="btn-outline px-4 py-2 text-sm font-medium rounded-lg">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        </svg>
+        Create Post
+      </a>
+    </div>
+    <div id="posts-list">
+      {% include "dashboard/rendering/posts.html" with posts=user_posts %}
+    </div>
+  </div>
+
+  <!-- My Templates Section -->
+  <div class="modern-card p-8">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h2 class="text-2xl font-bold mb-1" style="color: var(--dmu-text);">Post Templates</h2>
+        <p class="text-sm" style="color: var(--dmu-text-muted);">Reusable templates for quick post creation</p>
+      </div>
+      <a href="{% url 'dashboard:new-template' %}" class="btn-outline px-4 py-2 text-sm font-medium rounded-lg">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+        New Template
+      </a>
+    </div>
+    <div id="post-templates-list">
+      {% include "dashboard/rendering/post_templates.html" with templates=user_post_templates %}
+    </div>
+  </div>
+</div>
 {% endblock content %}

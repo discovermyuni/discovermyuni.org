@@ -1,15 +1,35 @@
 {% extends 'base.html' %}
+{% block title %}Communities | DiscoverMyUni{% endblock title %}
 
+{# Suppress the global right sidebar for this page #}
 {% block content %}
-
-here are all the avaliable organizations
-{% for org in organizations %}
-  <div class="card">
-    <h2>{{ org.title }}</h2>
-    <h2>{{ org.slug }}</h2>
-    <p>{{ org.description }}</p>
-    <a href="{{ org.get_absolute_url }}"">View</a>
-  </div>
-{% endfor %}
-
+<div class="reddit-card mb-3 d-flex align-items-center gap-3 flex-wrap">
+  <h1 class="h5 m-0">Communities</h1>
+  <form class="ms-auto d-flex gap-2 small" method="get" action="">
+    <input type="text" name="q" placeholder="Search" class="form-control form-control-sm" value="{{ request.GET.q }}" />
+    <button class="btn btn-sm btn-outline-secondary" disabled title="Planned search">Search</button>
+  </form>
+</div>
+<div class="row g-3">
+  {% for org in organizations %}
+    <div class="col-sm-6 col-lg-4">
+      <div class="reddit-card h-100 d-flex flex-column">
+        <div class="d-flex align-items-start gap-2 mb-2">
+          <div class="org-avatar rounded-circle bg-primary text-white fw-bold d-flex align-items-center justify-content-center" style="width:42px;height:42px;">{{ org.slug|slice:":2"|upper }}</div>
+          <div class="flex-grow-1 overflow-hidden">
+            <div class="fw-semibold text-truncate">u/{{ org.slug }}</div>
+            <div class="small text-muted text-truncate">{{ org.title }}</div>
+          </div>
+        </div>
+        <p class="small flex-grow-1 line-clamp-4 mb-3">{{ org.description }}</p>
+        <div class="d-flex gap-2">
+          <a href="{{ org.get_absolute_url }}" class="btn btn-sm btn-outline-primary flex-grow-1">View</a>
+          <button class="btn btn-sm btn-outline-secondary cursor-not-allowed" disabled title="Planned join">Join</button>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <div class="col-12"><p class="text-muted">No communities found.</p></div>
+  {% endfor %}
+</div>
 {% endblock content %}
